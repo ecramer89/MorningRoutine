@@ -34,8 +34,7 @@ public class Test : MonoBehaviour {
 		}
 		Debug.Log($"\t{description}: {report}");
 	}
-
-
+		
 	public struct Assertion{
 		string description;
 		Func<Event[], bool> handleResult;
@@ -81,13 +80,13 @@ public class Test : MonoBehaviour {
 		Debug.Log (description);
 		Event[] result = null;
 		Exception exception = null;
-		try{
-		   result = aggregate.execute (command);
-		} catch(Exception e){
-			exception = e;
-		}
-		bool previousOutcome = true;
 		foreach (Assertion assertion in assertions) {
+			try{
+			   result = aggregate.execute (command);
+			} catch(Exception e){
+				exception = e;
+			}
+			bool previousOutcome = true;
 			previousOutcome = assertion.run (result, exception, previousOutcome);
 		}
 	}
@@ -141,40 +140,18 @@ public class Test : MonoBehaviour {
 					()=>{
 						day.hydrate(new DayCreated(dayId));
 					}
+				),
+				new Assertion("When creating a day for the second time, it should fail",
+					(Event[] result) => {
+						return false;
+					},
+					(Exception e) => {
+						return e.GetType() == typeof(ValidationException) && e.Message == "Already exists.";
+					},
+					ExpectTrue
 				)
-		}
-		);
-	/*
-		Debug.Log ($"It should result in one Event: {cond}");
-		if (cond) {
-			Event evt = result [0];
-			var type = evt.GetType ();
-			cond = evt.GetType () == typeof(DayCreated);
-			Debug.Log ($"It should result in a DayCreatedEvent: {cond}");
-			if (cond) {
-				DayCreated dayCreated = (DayCreated)evt;
-				int _dayId = dayCreated.dayId;
-				cond = dayId == _dayId;
-				Debug.Log ($"It should have a dayId: {cond}");
-			} else {
-				Debug.Log ($"{FAIL}: event type is {type}");
 			}
-		} else {
-			Debug.Log ($"{FAIL}: length equals {length}");
-		}
-
-		Debug.Log ("When creating a day for the second time,");
-		day.hydrate (new DayCreated (dayId));
-		Debug.Log ("It should be rejected.");
-		try {
-		 	day.execute (new CreateDay (dayId)); 
-			Debug.Log ("{FAIL}: exception not thrown");
-		} catch(ValidationException e){
-			Debug.Log ($"True: {e.ToString()}");
-		}
-		catch(Exception e){
-			Debug.Log ("{FAIL}: unknown exception.");
-		}*/
+		);
 	}
 
 
