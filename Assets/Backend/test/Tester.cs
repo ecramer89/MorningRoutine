@@ -7,26 +7,118 @@ using System;
 public class Tester : MonoBehaviour {
 	public bool on;
 	public static string FAIL = "****FAIL****";
+	static int failed = 0;
+	static int passed = 0;
 
+	static Action<bool> ExpectTrue = (bool outcome) => {
+		string report = FAIL;
+		if (outcome){
+			report = "****SUCCESS****";
+			passed++;
+		}
+		else
+			failed++;
+
+		Debug.Log(report);
+	};
+
+	static Action<bool> ExpectFalse = (bool outcome) => {
+		string report = FAIL;
+		if (outcome)
+			failed++;
+		else{
+			report = "****SUCCESS****";
+			passed++;
+		}
+
+		Debug.Log(report);
+	};
+
+
+	public struct Assertion{
+		string description;
+		Func<Event[], bool> condition;
+		Action<bool> report;
+
+		public Assertion(string description, Func<Event[], bool> condition, Action<bool> report){
+			this.description = description;
+			this.condition = condition;
+			this.report = report;
+		}
+
+		public bool run(Event[] actual, bool previousCondition){
+			Debug.Log (description);
+			bool outcome = previousCondition;
+			outcome = outcome ? outcome && condition (actual) : outcome;
+			report (outcome);
+			return outcome;
+		}
+	}
+
+	public struct TestSuite
+	{
+		public Assertion[] assertions;
+		public string description;
+		public Aggregate aggregate;
+		public Command command;
+
+		public TestSuite(string description, Aggregate aggregate, Command command, Assertion[] assertions){
+			this.assertions = assertions;
+			this.description = description;
+			this.aggregate = aggregate;
+			this.command = command;
+		}
+
+	}
+
+	public void Describe(Aggregate aggregate, Command command, string description, Assertion[] assertions){
+		Debug.Log (description);
+		Event[] result = aggregate.execute (command);
+		bool previousOutcome = true;
+		foreach (Assertion assertion in assertions) {
+			previousOutcome = assertion.run (result, previousOutcome);
+		}
+	}
 
 	void Start () {
 		if (on) {
 			TestEvents ();
+			PrintResults ();
 		}
 	}
 
-	void TestEvents(){
-		TestDayCreated ();
+	void PrintResults (){
+		Debug.Log ($"Ran {passed + failed} tests: ");
+		Debug.Log ($"{passed} PASSED");
+		Debug.Log ($"{failed} FAILED");
 	}
 
-	void TestDayCreated(){
-		const int dayId = 0;
-		DayAggregate day = new DayAggregate ();
+	void TestEvents(){
+		TestSuite testDayCreated = TestDayCreated ();
+		Describe (testDayCreated.aggregate, testDayCreated.command, testDayCreated.description, testDayCreated.assertions);
+	}
 
-		Debug.Log ("When creating a day for the first time,");
-		Event[] result = day.execute (new CreateDay (dayId)); 
-		int length = result.Length;
-		bool cond = length == 1;
+	TestSuite TestDayCreated(){
+
+		const int dayId = 0;
+		return new TestSuite (
+			"When creating a day for the first time,",
+			new DayAggregate (),
+			new CreateDay (dayId),
+			new Assertion[] {
+			new Assertion("It should result in a DayCreatedEvent",
+				(Event[] result) => {
+					if(result.Length  < 1) return false;
+					Event evt = result [0];
+					var type = evt.GetType ();
+						Debug.Log(evt.GetType());
+					return evt.GetType () == typeof(DayCreated);
+				},
+				ExpectTrue
+			),
+		}
+		);
+	/*
 		Debug.Log ($"It should result in one Event: {cond}");
 		if (cond) {
 			Event evt = result [0];
@@ -56,7 +148,7 @@ public class Tester : MonoBehaviour {
 		}
 		catch(Exception e){
 			Debug.Log ("{FAIL}: unknown exception.");
-		}
+		}*/
 	}
 
 
