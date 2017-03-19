@@ -15,6 +15,10 @@ public class Test : MonoBehaviour {
 		return false;
 	};
 
+	static Func<Event[], bool> RejectResult = (Event[] result) => {
+		return false;
+	};
+
 	static Action<bool, string> ExpectTrue = (bool outcome, string description) => {
 		ReportResult(outcome, description);
 	};
@@ -147,9 +151,7 @@ public class Test : MonoBehaviour {
 					}
 				),
 				new Assertion("Invalid state (second time), it should fail",
-					(Event[] result) => {
-						return false;
-					},
+					RejectResult,
 					(Exception e) => {
 						return e.GetType() == typeof(ValidationException) && e.Message == "Already exists.";
 					},
