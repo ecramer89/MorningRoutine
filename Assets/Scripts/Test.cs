@@ -10,6 +10,10 @@ public class Test : MonoBehaviour {
 	static int failed = 0;
 	static int passed = 0;
 
+	static Func<Exception, bool> RejectException = (Exception e) => { 
+		return false;
+	};
+		
 	static Action<bool> ExpectTrue = (bool outcome) => {
 		string report = FAIL;
 		if (outcome){
@@ -37,20 +41,26 @@ public class Test : MonoBehaviour {
 
 	public struct Assertion{
 		string description;
-		Func<Event[], bool> condition;
+		Func<Event[], bool> handleResult;
+		Func<Exception, bool> handleException;
 		Action<bool> report;
+		Action runAfter;
 
-		public Assertion(string description, Func<Event[], bool> condition, Action<bool> report){
+		public Assertion(string description, Func<Event[], bool> handleResult, Func<Exception, bool> handleException, Action<bool> report, Action runAfter = null){
 			this.description = description;
-			this.condition = condition;
+			this.handleResult = handleResult;
+			this.handleException = handleException;
 			this.report = report;
+			this.runAfter = runAfter;
 		}
 
-		public bool run(Event[] actual, bool previousCondition){
+		public bool run(Event[] actual, Exception exception, bool previousCondition){
 			Debug.Log (description);
 			bool outcome = previousCondition;
-			outcome = outcome ? outcome && condition (actual) : outcome;
+			outcome = outcome ? outcome && (exception == null ? handleResult (actual) : handleException(exception)) : outcome;
 			report (outcome);
+			if (runAfter != null)
+				runAfter ();
 			return outcome;
 		}
 	}
@@ -73,10 +83,16 @@ public class Test : MonoBehaviour {
 
 	public void Describe(Aggregate aggregate, Command command, string description, Assertion[] assertions){
 		Debug.Log (description);
-		Event[] result = aggregate.execute (command);
+		Event[] result = null;
+		Exception exception = null;
+		try{
+		   result = aggregate.execute (command);
+		} catch(Exception e){
+			exception = e;
+		}
 		bool previousOutcome = true;
 		foreach (Assertion assertion in assertions) {
-			previousOutcome = assertion.run (result, previousOutcome);
+			previousOutcome = assertion.run (result, exception, previousOutcome);
 		}
 	}
 
@@ -102,9 +118,10 @@ public class Test : MonoBehaviour {
 	TestSuite TestDayCreated(){
 
 		const int dayId = 0;
+		Aggregate day = new DayAggregate ();
 		return new TestSuite (
 			"When creating a day for the first time,",
-			new DayAggregate (),
+			day,
 			new CreateDay (dayId),
 			new Assertion[] {
 			new Assertion("It should result in a DayCreatedEvent",
@@ -115,6 +132,7 @@ public class Test : MonoBehaviour {
 						Debug.Log(evt.GetType());
 					return evt.GetType () == typeof(DayCreated);
 				},
+				RejectException,
 				ExpectTrue
 			),
 				new Assertion("It should have a dayId", 
@@ -123,7 +141,11 @@ public class Test : MonoBehaviour {
 						int _dayId = dayCreated.dayId;
 						return dayId == _dayId;
 					},
-					ExpectTrue
+					RejectException,
+					ExpectTrue,
+					()=>{
+						day.hydrate(new DayCreated(dayId));
+					}
 				)
 		}
 		);
