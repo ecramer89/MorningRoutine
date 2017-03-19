@@ -117,6 +117,14 @@ public class Test : MonoBehaviour {
 				},
 				ExpectTrue
 			),
+				new Assertion("It should have a dayId", 
+					(Event[] result) => {
+						DayCreated dayCreated = (DayCreated)result[0];
+						int _dayId = dayCreated.dayId;
+						return dayId == _dayId;
+					},
+					ExpectTrue
+				)
 		}
 		);
 	/*
