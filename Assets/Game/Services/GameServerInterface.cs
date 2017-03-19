@@ -7,8 +7,9 @@ public class GameServerInterface : MonoBehaviour {
 	public void CreateDay(){
 		CreateDayResponse response = DayController.CreateDay ();
 		if (!response.error) {
-			GameState.DayId = response.dayId;
-			Debug.Log ($"Success: New Day {GameState.DayId}");
+			GameState state = GameState.Instance;
+			state.DayId = response.dayId;
+			Debug.Log ($"Success: New Day {state.DayId}");
 		} else
 			Debug.Log ("Failed");
 	}

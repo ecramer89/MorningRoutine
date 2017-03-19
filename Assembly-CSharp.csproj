@@ -78,8 +78,9 @@
      <Compile Include="Assets\Backend\Services\ModelRepository.cs" />
      <Compile Include="Assets\Backend\Services\Service.cs" />
      <Compile Include="Assets\Backend\test\Tester.cs" />
-     <Compile Include="Assets\Game\GameServerInterface.cs" />
      <Compile Include="Assets\Game\GameState.cs" />
+     <Compile Include="Assets\Game\Services\GameServerInterface.cs" />
+     <Compile Include="Assets\Game\UI Components\StartGameButton.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
