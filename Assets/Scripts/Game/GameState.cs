@@ -12,7 +12,18 @@ public class GameState {
 		}
 	}
 
-	//Each property is observable.
+
+	/*
+	 * Each property is observable.
+	 * Each property is a representation of the state of a read model in the server
+	 * There are no 'high level' controllers in this application.
+	 * Every single Unity GameObject, component, whatever, subscribes to exactly those properties of state
+	 * it needs to know about. When those properties change, they respond accordingly. In turn, each component
+	 * has the ability to issue a command to the back end through the Game GameServerInterface component. 
+	 * The server handles the validations of the command and any state changes that result.
+	 * The GameServerInterface, in turn, updates any important Game state variables here
+	 * And the listening components update in turn.
+	 * */
 	public delegate void DayIdChangeHandler(int oldDayId, int newDayId);
 	public event DayIdChangeHandler DayIdChanged;
 	int dayId;
