@@ -1,16 +1,18 @@
 ﻿public abstract class Aggregate  {
 
-	string name = null;
-
-	public string Name{
-		get{
-			if (this.name == null) {
-				this.name = this.GetType().Name;
-			}
-			return this.name;
+	static int nullId = -1;
+	public static int NullId{
+		get { 
+			return nullId;
 		}
 	}
 
+	protected int id;
+
+	public Aggregate(){
+		this.id = Aggregate.NullId;
+	}
+		
 	public abstract void hydrate(Event evt);
 	public abstract Event[] execute(Command command);
 

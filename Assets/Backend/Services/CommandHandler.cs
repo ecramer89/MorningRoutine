@@ -18,14 +18,15 @@ public class CommandHandler : Service {
 
 
 	public static bool HandleCommand(Aggregate aggregate, int aggregateId, Command command){
-		LinkedList<Event> events = EventStore.GetAllEventsFor (aggregate.Name, aggregateId);
+		string modelName = ModelNameGetter.GetModelName (aggregate.GetType());
+		LinkedList<Event> events = EventStore.GetAllEventsFor (modelName, aggregateId);
 		foreach (Event evt in events) {
 			aggregate.hydrate (evt);
 		}
 	
 		try {
 			Event[] results = aggregate.execute (command);
-			string modelName = ModelNameGetter.GetModelName (aggregate.GetType());
+
 			EventStore.AppendAllEventsFor (modelName, aggregateId, results);
 
 			foreach (Reducer reducer in reducers) {

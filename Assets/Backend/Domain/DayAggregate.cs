@@ -1,13 +1,7 @@
 ﻿using System;
 
 public class DayAggregate : Aggregate {
-
-	private int id;
-
-	public DayAggregate(){
-		this.id = -1;
-	}
-
+	
 	public override Event[] execute(Command command){
 		
 		if(command.GetType() == typeof(CreateDay)){
@@ -19,7 +13,7 @@ public class DayAggregate : Aggregate {
 
 	private Event[] CreateDay(CreateDay command){
 		
-		if(this.id != -1) {
+		if(this.id != Aggregate.NullId) {
 			throw new ValidationException ("id", "Already exists.");
 		}
 
