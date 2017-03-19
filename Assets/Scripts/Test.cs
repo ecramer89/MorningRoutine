@@ -6,7 +6,8 @@ using System;
 
 public class Test : MonoBehaviour {
 	
-	public static string FAIL = "****FAIL****";
+	public static readonly string FAIL = "FAIL";
+	public static readonly string SUCCESS = "SUCCESS";
 	static int failed = 0;
 	static int passed = 0;
 
@@ -14,28 +15,28 @@ public class Test : MonoBehaviour {
 		return false;
 	};
 		
-	static Action<bool> ExpectTrue = (bool outcome) => {
+	static Action<bool, string> ExpectTrue = (bool outcome, string description) => {
 		string report = FAIL;
 		if (outcome){
-			report = "****SUCCESS****";
+			report = SUCCESS;
 			passed++;
 		}
 		else
 			failed++;
 
-		Debug.Log(report);
+		Debug.Log($"\t{description}: {report}");
 	};
 
-	static Action<bool> ExpectFalse = (bool outcome) => {
+	static Action<bool, string> ExpectFalse = (bool outcome, string description) => {
 		string report = FAIL;
 		if (outcome)
 			failed++;
 		else{
-			report = "****SUCCESS****";
+			report = SUCCESS;
 			passed++;
 		}
 
-		Debug.Log(report);
+		Debug.Log($"\t{description}: {report}");
 	};
 
 
@@ -43,10 +44,10 @@ public class Test : MonoBehaviour {
 		string description;
 		Func<Event[], bool> handleResult;
 		Func<Exception, bool> handleException;
-		Action<bool> report;
+		Action<bool, string> report;
 		Action runAfter;
 
-		public Assertion(string description, Func<Event[], bool> handleResult, Func<Exception, bool> handleException, Action<bool> report, Action runAfter = null){
+		public Assertion(string description, Func<Event[], bool> handleResult, Func<Exception, bool> handleException, Action<bool, string> report, Action runAfter = null){
 			this.description = description;
 			this.handleResult = handleResult;
 			this.handleException = handleException;
@@ -55,10 +56,9 @@ public class Test : MonoBehaviour {
 		}
 
 		public bool run(Event[] actual, Exception exception, bool previousCondition){
-			Debug.Log (description);
 			bool outcome = previousCondition;
 			outcome = outcome ? outcome && (exception == null ? handleResult (actual) : handleException(exception)) : outcome;
-			report (outcome);
+			report (outcome, description);
 			if (runAfter != null)
 				runAfter ();
 			return outcome;
@@ -129,7 +129,6 @@ public class Test : MonoBehaviour {
 					if(result.Length  < 1) return false;
 					Event evt = result [0];
 					var type = evt.GetType ();
-						Debug.Log(evt.GetType());
 					return evt.GetType () == typeof(DayCreated);
 				},
 				RejectException,
