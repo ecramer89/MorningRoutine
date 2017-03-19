@@ -14,30 +14,26 @@ public class Test : MonoBehaviour {
 	static Func<Exception, bool> RejectException = (Exception e) => { 
 		return false;
 	};
-		
-	static Action<bool, string> ExpectTrue = (bool outcome, string description) => {
-		string report = FAIL;
-		if (outcome){
-			report = SUCCESS;
-			passed++;
-		}
-		else
-			failed++;
 
-		Debug.Log($"\t{description}: {report}");
+	static Action<bool, string> ExpectTrue = (bool outcome, string description) => {
+		ReportResult(outcome, description);
 	};
 
 	static Action<bool, string> ExpectFalse = (bool outcome, string description) => {
-		string report = FAIL;
-		if (outcome)
-			failed++;
-		else{
-			report = SUCCESS;
-			passed++;
-		}
-
-		Debug.Log($"\t{description}: {report}");
+		ReportResult(!outcome, description);
 	};
+
+	static void ReportResult(bool testPassed, string description){
+		string report;
+		if (testPassed) {
+			passed++;
+			report = SUCCESS;
+		} else {
+			failed++;
+			report = FAIL;
+		}
+		Debug.Log($"\t{description}: {report}");
+	}
 
 
 	public struct Assertion{
