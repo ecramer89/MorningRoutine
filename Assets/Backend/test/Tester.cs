@@ -5,7 +5,7 @@ using System;
 
 
 public class Tester : MonoBehaviour {
-	public bool on;
+	
 	public static string FAIL = "****FAIL****";
 	static int failed = 0;
 	static int passed = 0;
@@ -81,10 +81,11 @@ public class Tester : MonoBehaviour {
 	}
 
 	void Start () {
-		if (on) {
+		if (Environment.Running == Environment.Type.Test) {
 			TestEvents ();
 			PrintResults ();
-		}
+		} else
+			gameObject.SetActive (false);
 	}
 
 	void PrintResults (){
