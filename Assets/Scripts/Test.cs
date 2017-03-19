@@ -86,6 +86,10 @@ public class Test : MonoBehaviour {
 		public Aggregate aggregate;
 		public Command command;
 
+		public static string FormatTestSuiteDescription(string eventName){
+			return $"{eventName} tests:";
+		}
+
 		public TestSuite(string description, Aggregate aggregate, Command command, Assertion[] assertions){
 			this.assertions = assertions;
 			this.description = description;
@@ -134,7 +138,7 @@ public class Test : MonoBehaviour {
 		const int dayId = 0;
 		Aggregate aggregate = new DayAggregate ();
 		return new TestSuite (
-			"CreateDayTests: ,",
+			TestSuite.FormatTestSuiteDescription("DayCreated"),
 			aggregate,
 			new CreateDay (dayId),
 			new Assertion[] {
