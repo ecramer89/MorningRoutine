@@ -60,6 +60,11 @@ public class Test : MonoBehaviour {
 		}
 	}
 
+	/*
+	 * A TestSuite should verify that a valid command publishes the type type(s) of events, in the right sequence, with the expected fields.
+	 * It should also verify that a command DOES NOT succeed if the state of the aggregate on which it is executed invalidates the command.
+	 * Since C# is strict about constructor parameters, there is no need to verify that commands with missing fields do not pass (as is necessary in Javascript)
+	 * */
 	public struct TestSuite
 	{
 		public Assertion[] assertions;
@@ -100,6 +105,7 @@ public class Test : MonoBehaviour {
 	}
 
 	void PrintResults (){
+		Debug.Log ("==============================================");
 		Debug.Log ($"Ran {passed + failed} tests: ");
 		Debug.Log ($"{passed} PASSED");
 		Debug.Log ($"{failed} FAILED");
@@ -109,17 +115,16 @@ public class Test : MonoBehaviour {
 		TestSuite testDayCreated = TestDayCreated ();
 		Describe (testDayCreated.aggregate, testDayCreated.command, testDayCreated.description, testDayCreated.assertions);
 	}
-
+		
 	TestSuite TestDayCreated(){
-
 		const int dayId = 0;
-		Aggregate day = new DayAggregate ();
+		Aggregate aggregate = new DayAggregate ();
 		return new TestSuite (
-			"When creating a day for the first time,",
-			day,
+			"CreateDayTests: ,",
+			aggregate,
 			new CreateDay (dayId),
 			new Assertion[] {
-			new Assertion("It should result in a DayCreatedEvent",
+			new Assertion("Valid state: It should result in a DayCreatedEvent",
 				(Event[] result) => {
 					if(result.Length  < 1) return false;
 					Event evt = result [0];
@@ -129,7 +134,7 @@ public class Test : MonoBehaviour {
 				RejectException,
 				ExpectTrue
 			),
-				new Assertion("It should have a dayId", 
+				new Assertion("Valid state: It should have a dayId", 
 					(Event[] result) => {
 						DayCreated dayCreated = (DayCreated)result[0];
 						int _dayId = dayCreated.dayId;
@@ -138,10 +143,10 @@ public class Test : MonoBehaviour {
 					RejectException,
 					ExpectTrue,
 					()=>{
-						day.hydrate(new DayCreated(dayId));
+						aggregate.hydrate(new DayCreated(dayId));
 					}
 				),
-				new Assertion("When creating a day for the second time, it should fail",
+				new Assertion("Invalid state (second time), it should fail",
 					(Event[] result) => {
 						return false;
 					},
@@ -151,6 +156,7 @@ public class Test : MonoBehaviour {
 					ExpectTrue
 				)
 			}
+
 		);
 	}
 
