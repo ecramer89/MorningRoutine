@@ -82,7 +82,7 @@
      <Compile Include="Assets\Scripts\Game\Services\GameServerInterface.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
-     <Compile Include="Assets\Scripts\Tester.cs" />
+     <Compile Include="Assets\Scripts\Test.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

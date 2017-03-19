@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public class Tester : MonoBehaviour {
+public class Test : MonoBehaviour {
 	
 	public static string FAIL = "****FAIL****";
 	static int failed = 0;
