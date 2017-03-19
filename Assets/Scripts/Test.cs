@@ -39,12 +39,22 @@ public class Test : MonoBehaviour {
 		Debug.Log($"\t{description}: {report}");
 	}
 		
+		
 	public struct Assertion{
 		string description;
 		Func<Event[], bool> handleResult;
 		Func<Exception, bool> handleException;
 		Action<bool, string> report;
 		Action runAfter;
+
+		public static string FormatShouldPassDescription(string expectation){
+
+			return $"Valid state: it should {expectation}.";
+		}
+
+		public static string FormatShouldFailDescription(string reason){
+			return $"Invalid state ({reason}): it should fail.";
+		}
 
 		public Assertion(string description, Func<Event[], bool> handleResult, Func<Exception, bool> handleException, Action<bool, string> report, Action runAfter = null){
 			this.description = description;
@@ -128,7 +138,8 @@ public class Test : MonoBehaviour {
 			aggregate,
 			new CreateDay (dayId),
 			new Assertion[] {
-			new Assertion("Valid state: It should result in a DayCreatedEvent",
+				new Assertion(
+				Assertion.FormatShouldPassDescription("result in a DayCreatedEvent"),
 				(Event[] result) => {
 					if(result.Length  < 1) return false;
 					Event evt = result [0];
@@ -138,7 +149,8 @@ public class Test : MonoBehaviour {
 				RejectException,
 				ExpectTrue
 			),
-				new Assertion("Valid state: It should have a dayId", 
+				new Assertion(
+					Assertion.FormatShouldPassDescription("have a dayId"),
 					(Event[] result) => {
 						DayCreated dayCreated = (DayCreated)result[0];
 						int _dayId = dayCreated.dayId;
@@ -150,7 +162,8 @@ public class Test : MonoBehaviour {
 						aggregate.hydrate(new DayCreated(dayId));
 					}
 				),
-				new Assertion("Invalid state (second time), it should fail",
+				new Assertion(
+					Assertion.FormatShouldFailDescription("already exists"),
 					RejectResult,
 					(Exception e) => {
 						return e.GetType() == typeof(ValidationException) && e.Message == "Already exists.";
