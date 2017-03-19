@@ -21,7 +21,7 @@ public class Tester : MonoBehaviour {
 
 	void TestDayCreated(){
 		const int dayId = 0;
-		Day day = new Day ();
+		DayAggregate day = new DayAggregate ();
 
 		Debug.Log ("When creating a day for the first time,");
 		Event[] result = day.execute (new CreateDay (dayId)); 

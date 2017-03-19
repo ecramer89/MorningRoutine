@@ -1,10 +1,10 @@
 ﻿using System;
 
-public class Day : Aggregate {
+public class DayAggregate : Aggregate {
 
 	private int id;
 
-	public Day(){
+	public DayAggregate(){
 		this.id = -1;
 	}
 

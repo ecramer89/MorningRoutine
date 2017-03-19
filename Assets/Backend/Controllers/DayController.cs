@@ -2,11 +2,13 @@
 public class DayController  {
 
 
-	public void CreateDay(){
+	public static CreateDayResponse CreateDay(){
 		int dayId = IntegerGUIDCreator.CreateGUID ();
 		Command command = new CreateDay (dayId);
-		Aggregate day = new Day ();
-		//CommandHandler.handleCommand(day, dayId, command);
+		Aggregate day = new DayAggregate ();
+		bool success = CommandHandler.HandleCommand(day, dayId, command);
+		CreateDayResponse response = new CreateDayResponse (dayId, !success);
+		return response;
 	}
 
 }

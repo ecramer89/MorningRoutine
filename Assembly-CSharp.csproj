@@ -56,7 +56,7 @@
      <Compile Include="Assets\Backend\Controllers\DayController.cs" />
      <Compile Include="Assets\Backend\CustomAttributes.cs" />
      <Compile Include="Assets\Backend\Domain\Aggregate.cs" />
-     <Compile Include="Assets\Backend\Domain\Day.cs" />
+     <Compile Include="Assets\Backend\Domain\DayAggregate.cs" />
      <Compile Include="Assets\Backend\Events\CoffeeDrunk.cs" />
      <Compile Include="Assets\Backend\Events\CoffeeMade.cs" />
      <Compile Include="Assets\Backend\Events\CreamAddedToCoffee.cs" />
@@ -70,6 +70,7 @@
      <Compile Include="Assets\Backend\ReadModels\ReadModel.cs" />
      <Compile Include="Assets\Backend\Reducers\DayReducer.cs" />
      <Compile Include="Assets\Backend\Reducers\Reducer.cs" />
+     <Compile Include="Assets\Backend\ServerResponses.cs" />
      <Compile Include="Assets\Backend\Services\CommandHandler.cs" />
      <Compile Include="Assets\Backend\Services\EventStore.cs" />
      <Compile Include="Assets\Backend\Services\GetModelName.cs" />
@@ -77,6 +78,8 @@
      <Compile Include="Assets\Backend\Services\ModelRepository.cs" />
      <Compile Include="Assets\Backend\Services\Service.cs" />
      <Compile Include="Assets\Backend\test\Tester.cs" />
+     <Compile Include="Assets\Game\GameServerInterface.cs" />
+     <Compile Include="Assets\Game\GameState.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

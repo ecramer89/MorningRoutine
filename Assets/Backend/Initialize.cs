@@ -15,7 +15,5 @@ public class Initialize : MonoBehaviour {
 			}
 		}
 
-		CommandHandler.test ();
-
 	}
 }

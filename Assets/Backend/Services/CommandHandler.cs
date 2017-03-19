@@ -17,19 +17,28 @@ public class CommandHandler : Service {
 	}
 
 
-
-	public static void HandleCommand(Aggregate aggregate, int aggregateId, Command command){
+	public static bool HandleCommand(Aggregate aggregate, int aggregateId, Command command){
 		LinkedList<Event> events = EventStore.GetAllEventsFor (aggregate.Name, aggregateId);
-		foreach(Event evt in events){
+		foreach (Event evt in events) {
 			aggregate.hydrate (evt);
 		}
-		Event[] results = aggregate.execute (command);
-		EventStore.AppendAllEventsFor (aggregate.Name, aggregateId, results);
 	
-		foreach (Reducer reducer in reducers) {
-			foreach (Event evt in results) {
-				reducer.Reduce (evt, ModelRepository.GetTable(reducer.ModelName));
+		try {
+			Event[] results = aggregate.execute (command);
+			string modelName = ModelNameGetter.GetModelName (aggregate.GetType());
+			EventStore.AppendAllEventsFor (modelName, aggregateId, results);
+
+			foreach (Reducer reducer in reducers) {
+				foreach (Event evt in results) {
+					reducer.Reduce (evt, ModelRepository.GetTable (reducer.ModelName));
+				}
 			}
+			return true;
+		} catch (ValidationException e) {
+			Debug.Log (e.Message);
 		}
+		return false;
 	}
+	
+
 }
