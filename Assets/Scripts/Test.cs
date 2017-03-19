@@ -125,8 +125,7 @@ public class Test : MonoBehaviour {
 	void PrintResults (){
 		Debug.Log ("==============================================");
 		Debug.Log ($"Ran {passed + failed} tests: ");
-		Debug.Log ($"{passed} PASSED");
-		Debug.Log ($"{failed} FAILED");
+		Debug.Log ($"{passed} PASSED; {failed} FAILED");
 	}
 
 	void TestEvents(){
