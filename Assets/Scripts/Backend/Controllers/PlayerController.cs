@@ -4,6 +4,7 @@ public class PlayerController  {
 
 
 	public static ServerResponse BeginGame(){
+		
 		int playerId = IntegerGUIDCreator.CreateGUID ();
 		//stub in for now; eventually have a text field where player can enter name
 		string playerName = "Chase";

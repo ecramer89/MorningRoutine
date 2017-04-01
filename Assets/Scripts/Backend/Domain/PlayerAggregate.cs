@@ -35,7 +35,7 @@ public class PlayerAggregate : Aggregate {
 			throw new ValidationException ("id", "Already exists.");
 		}
 		return new Event[] {
-			new NewGameBegun (command.playerId, command.playerName)
+			new NewGameBegun(command.playerId, command.playerName)
 		};
 
 	}
