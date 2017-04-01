@@ -5,7 +5,7 @@ using UnityEngine;
 public class StartGameButton : MonoBehaviour {
 
 	void Start () {
-		GameState.Instance.DayIdChanged += (int oldDayId, int newDayId) => {
+		GameState.Instance.playerIdSet += (int playerId) => {
 			gameObject.SetActive (false);
 		};
 	}

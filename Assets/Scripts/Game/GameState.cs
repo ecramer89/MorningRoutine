@@ -24,21 +24,19 @@ public class GameState {
 	 * The GameServerInterface, in turn, updates any important Game state variables here
 	 * And the listening components update in turn.
 	 * */
-	public delegate void DayIdChangeHandler(int oldDayId, int newDayId);
-	public event DayIdChangeHandler DayIdChanged;
-	int dayId;
-	public int DayId{
+	public delegate void PlayerIdHandler(int playerId);
+	public event PlayerIdHandler playerIdSet;
+	int playerId;
+	public int PlayerId{
 		get {
-			return dayId;
+			return playerId;
 		}
 		set {
-			int temp = dayId;
-			dayId = value;
-			DayIdChanged (temp, dayId);
+			playerId = value;
+			playerIdSet (playerId);
 		}
 
 	}
-
 
 
 }

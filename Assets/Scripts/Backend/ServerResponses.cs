@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 
 
-public struct CreateDayResponse {
+public struct ServerResponse {
 	public bool error;
-	public int dayId;
+	public int aggregateId;
+	public string modelName;
 
-	public CreateDayResponse(int dayId, bool error){
-		this.dayId = dayId;
+	public ServerResponse(int aggregateId, string modelName, bool error){
+		this.aggregateId = aggregateId;
+		this.modelName = modelName;
 		this.error = error;
 	}
-
 }

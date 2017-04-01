@@ -46,24 +46,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Backend\Commands\AddCreamToCoffee.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\BeginNewGame.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\CreateDay.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\DrinkCoffee.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\MakeCoffee.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\TakeCream.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\ToggleFridge.cs" />
-     <Compile Include="Assets\Scripts\Backend\Controllers\DayController.cs" />
+     <Compile Include="Assets\Scripts\Backend\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Backend\CustomAttributes.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\Aggregate.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\DayAggregate.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\CoffeeDrunk.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\CoffeeMade.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\CreamAddedToCoffee.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\CreamTaken.cs" />
+     <Compile Include="Assets\Scripts\Backend\Domain\PlayerAggregate.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\DayCreated.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\FridgeToggled.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
      <Compile Include="Assets\Scripts\Backend\Exceptions\ValidationException.cs" />
      <Compile Include="Assets\Scripts\Backend\Initialize.cs" />
      <Compile Include="Assets\Scripts\Backend\ReadModels\DayReadModel.cs" />

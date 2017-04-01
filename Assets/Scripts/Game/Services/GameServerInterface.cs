@@ -5,11 +5,11 @@ using UnityEngine;
 public class GameServerInterface : MonoBehaviour {
 	//"action creators"
 	public void CreateDay(){
-		CreateDayResponse response = DayController.CreateDay ();
+		ServerResponse response = PlayerController.BeginGame ();
 		if (!response.error) {
 			GameState state = GameState.Instance;
-			state.DayId = response.dayId;
-			Debug.Log ($"Success: New Day {state.DayId}");
+			state.PlayerId = response.aggregateId;
+			Debug.Log ($"Success: New Player {state.PlayerId}");
 		} else
 			Debug.Log ("Failed");
 	}
