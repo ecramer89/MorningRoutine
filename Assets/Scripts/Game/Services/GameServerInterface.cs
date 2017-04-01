@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameServerInterface : MonoBehaviour {
-
+	//"action creators"
 	public void CreateDay(){
 		CreateDayResponse response = DayController.CreateDay ();
 		if (!response.error) {

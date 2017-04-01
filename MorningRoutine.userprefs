@@ -1,18 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Backend/Reducers/DayReducer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/GameState.cs">
     <Files>
-      <File FileName="Assets/Backend/Services/EventStore.cs" Line="15" Column="4" />
-      <File FileName="Assets/Backend/ReadModels/ReadModel.cs" Line="4" Column="2" />
-      <File FileName="Assets/Backend/ReadModels/DayReadModel.cs" Line="8" Column="3" />
-      <File FileName="Assets/Backend/Services/ModelRepository.cs" Line="40" Column="2" />
-      <File FileName="Assets/Backend/Services/CommandHandler.cs" Line="28" Column="2" />
-      <File FileName="Assets/Backend/test/Tester.cs" Line="6" Column="1" />
-      <File FileName="Assets/Backend/Reducers/Reducer.cs" Line="11" Column="3" />
-      <File FileName="Assets/Backend/Reducers/DayReducer.cs" Line="12" Column="4" />
-      <File FileName="Assets/Backend/Services/Service.cs" Line="9" Column="2" />
-      <File FileName="Assets/Backend/Services/GetModelName.cs" Line="5" Column="2" />
-      <File FileName="Assets/Backend/Initialize.cs" Line="17" Column="3" />
+      <File FileName="Assets/Scripts/Test.cs" Line="130" Column="2" />
+      <File FileName="Assets/Scripts/Backend/Domain/DayAggregate.cs" Line="12" Column="3" />
+      <File FileName="Assets/Scripts/Backend/Exceptions/ValidationException.cs" Line="9" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Commands/CreateDay.cs" Line="5" Column="2" />
+      <File FileName="Assets/Scripts/Game/GameState.cs" Line="16" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
