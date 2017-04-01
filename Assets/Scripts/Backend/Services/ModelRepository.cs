@@ -31,6 +31,10 @@ public class ModelRepository : Service  {
 		else throw new KeyNotFoundException ($"Error: no ModelRepository for {modelName}");
 
 	}
+
+	public static ReadModel Get(string modelName, int aggregateId){
+		return GetTable (modelName).GetModel (aggregateId);
+	}
 		
 }
 
@@ -42,8 +46,16 @@ public class ModelTable{
 		entries = new Dictionary<int, ReadModel> ();
 	}
 
-	public void CreateOne(int aggregateId, ReadModel initialValue){
+	public void InsertModel(int aggregateId, ReadModel initialValue){
 	    entries.Add (aggregateId, initialValue);
+	}
+
+	public ReadModel GetModel(int aggregateId){
+		ReadModel model;
+		if (entries.TryGetValue (aggregateId, out model)) {
+			return model;
+		}
+		throw new KeyNotFoundException ($"Error: no model with id {aggregateId}");
 	}
 
 

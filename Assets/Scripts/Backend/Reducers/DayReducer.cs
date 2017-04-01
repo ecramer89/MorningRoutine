@@ -7,7 +7,7 @@ public class DayReducer : Reducer {
 		Type type = evt.GetType ();
 		if(type == typeof(DayCreated)){
 			DayCreated dayCreated = (DayCreated)evt;
-			table.CreateOne (dayCreated.dayId, new DayReadModel(dayCreated.dayId));
+			table.InsertModel (dayCreated.dayId, new DayReadModel(dayCreated.dayId));
 			return;
 		}
 	}
