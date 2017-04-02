@@ -13,6 +13,9 @@ public class GameState {
 	}
 
 
+
+
+	public PlayerState playerState = new PlayerState();
 	public delegate void PlayerIdHandler(int playerId);
 	public event PlayerIdHandler playerIdSet;
 	int playerId;
@@ -21,24 +24,36 @@ public class GameState {
 			return playerId;
 		}
 		set {
-			playerId = value;
-			playerIdSet (playerId);
+			playerState.id = value;
+			playerIdSet (playerState.id);
 		}
 
 	}
 
-
+	public MessageState messageState = new MessageState();
 	public delegate void MessageHandler(string newMessage, string oldMessage);
 	public event MessageHandler messageSet;
-	string message;
+
 	public string Message{
 		get{
-			return message;
+			return messageState.message;
 		}
 		set {
-			string oldMessage = message;
-			message = value;
-			messageSet (message, oldMessage); 
+			string oldMessage = messageState.message;
+			messageState.message = value;
+			messageSet (messageState.message, oldMessage); 
 		}
 	}
+}
+
+
+//state structs
+public struct PlayerState{
+	public int id; 
+	public string name;
+
+}
+
+public struct MessageState{
+	public string message;
 }
