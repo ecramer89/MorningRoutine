@@ -8,6 +8,7 @@ public class Narrator : MonoBehaviour {
 	void Start () {
 		gameObject.SetActive (false);
 	
+
 		GameState.Instance.playerFetched += () => {
 			gameObject.SetActive (true);
 			string playerName = GameState.Instance.PlayerState.name;
@@ -26,9 +27,11 @@ public class Narrator : MonoBehaviour {
 				}
 				else {
 					GameObject.Destroy(textTimer.gameObject);
+					ActionCreator.Instance.EndNarration();
 				}
 			};
 			textTimer.StartTimer();
+			ActionCreator.Instance.BeginNarration();
 		};
 		
 	}

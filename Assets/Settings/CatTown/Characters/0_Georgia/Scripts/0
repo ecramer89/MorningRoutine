@@ -1,0 +1,22 @@
+<MAIN>
+-:Hello
+-!*hello*|*hi*|*salutations*|*greetings*
+-:How are you?
+-!how*you?|*yourself?
+-:I'm okay. I went to the doctor yesterday about a rash on my forehead.
+-!*what*(he|she|doctor|they)*(prescribe|give|say)*?
+-:Dr. Bones told me to put some aloe vera gel on it. He said aloe vera gel
+has natural anti inflammatory properties. I like how Bones doesn't prescribe drugs
+if he doesn't think it's necessary. But this aloe vera gel is proving very tricky to find.
+-?
+-?a!*Meowton Drugs*?
+-?a:I checked there. They have some moisturizers and hand creams that contain aloe vera, but they're mostly chemicals and dyes. I didn't want to put that stuff on my face.
+-?b!*Wholesome Chews*?
+-?b:I checked there. They have gels and creams without extra preservatives and such but they're very expensive. I didn't want to spend $20 on a tiny bottle.
+-?c:*make*yourself*?
+-?c!No, but that's an interesting idea... I'll try that.
+<REWARD>
+-{ITEM} Hand-made aloe vera gel
+<SIDE>
+-:*what*(hobbies|do*yesterday|like)*?
+-:I don't have too many hobbies. I think that hobbies are kind of a recent invention. Once upon a time, people made their own candles because they had too. Now they call that a hobby. I make my own candles, but I don't consider that a hobby. I don't like buying stuff from the store if I can help it.

@@ -15,7 +15,7 @@ public class GameState {
 
 	PlayerState playerState = new PlayerState();
 	public delegate void PlayerStateHandler();
-	public event PlayerStateHandler playerFetched;
+	public event PlayerStateHandler playerFetched=()=>{};
 	public PlayerState PlayerState{
 		get {
 			return playerState;
@@ -29,7 +29,7 @@ public class GameState {
 
 	MessageState messageState = new MessageState();
 	public delegate void MessageStateHandler();
-	public event MessageStateHandler messageSet;
+	public event MessageStateHandler messageSet=()=>{};
 
 	public MessageState MessageState{
 		get{
@@ -41,22 +41,19 @@ public class GameState {
 		}
 	}
 
+	NarrationState narrationState = new NarrationState ();
+	public delegate void NarrationStateHandler();
+	public event NarrationStateHandler narrationSet=()=>{};
 
-	OptionsState optionsState = new OptionsState ();
-	public delegate void OptionsStateHandler();
-	public event OptionsStateHandler optionsSet;
-
-	public OptionsState OptionsState{
-		get {
-			return optionsState;
+	public NarrationState NarrationState{
+		get{
+			return narrationState;
 		}
-		set {
-			optionsState = value;
-			optionsSet ();
+		set{
+			narrationState = value;
+			narrationSet ();
 		}
-
 	}
-		
 }
 
 
@@ -70,7 +67,7 @@ public struct PlayerState{
 public struct MessageState{
 	public string message;
 }
-
-public struct OptionsState{
-	public bool allowed;
+	
+public struct NarrationState{
+	public bool narrationOn;
 }

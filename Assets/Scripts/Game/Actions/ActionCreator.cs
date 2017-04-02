@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum ActionTypes {NEW_GAME_BEGUN, MESSAGE_SET};
+public enum ActionTypes {NEW_GAME_BEGUN, MESSAGE_SET, NARRATION_BEGUN, NARRATION_ENDED};
 
 public class ActionCreator : MonoBehaviour  {
 	GameServerInterface serverInterface;
@@ -23,6 +23,14 @@ public class ActionCreator : MonoBehaviour  {
 
 	public void SetMessage(string message){
 		GameReducer.Reduce (ActionTypes.MESSAGE_SET, message);
+	}
+
+	public void BeginNarration(){
+		GameReducer.Reduce (ActionTypes.NARRATION_BEGUN);
+	}
+
+	public void EndNarration(){
+		GameReducer.Reduce (ActionTypes.NARRATION_ENDED);
 	}
 
 }
