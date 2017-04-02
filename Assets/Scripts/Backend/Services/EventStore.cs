@@ -3,6 +3,23 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 
+//probably the easiest way would be to have a global boolean called "streaming" or whatever and then make any ui changes conditional on this being false.
+//basically... the ui elements should oly do their thing (dress up the ui) on the very last event of each aggregate
+//no, make it a new environment case.
+//and think about- whatever you want the state to actually look like, 
+//as in, which buttons should appear on the screen or whatever
+//the information that determines that 
+//needs to be saved to an aggregate that would live on the server
+//so for example if
+//when the intro is done
+//we want a button that says "make coffee" to be appearing on the screen
+//then the state changrs that result in that button appearing
+//needto be saved to the event stream somehow
+//this is what we should save as the game data.
+//for each aggregate
+//the events that were posted
+//and then replay that, at the start of the game, to get the player read model into the state it needs to be 
+//and then update the game state (we don't necessarily want the UI events to play through each time we estart the game though, so need some means of)
 public class EventStore : Service {
 
 	static Dictionary<string, Dictionary<int, LinkedList<Event>>> data;

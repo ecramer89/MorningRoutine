@@ -129,10 +129,11 @@ public class Test : MonoBehaviour {
 	}
 
 	void TestEvents(){
-		TestSuite testDayCreated = TestDayCreated ();
-		Describe (testDayCreated.aggregate, testDayCreated.command, testDayCreated.description, testDayCreated.assertions);
+		//TestSuite testDayCreated = TestDayCreated ();
+		//Describe (testDayCreated.aggregate, testDayCreated.command, testDayCreated.description, testDayCreated.assertions);
 	}
-		
+	/*	
+	 * saved as a sample, but deleted the day aggregate...
 	TestSuite TestDayCreated(){
 		const int dayId = 0;
 		Aggregate aggregate = new DayAggregate ();
@@ -176,7 +177,7 @@ public class Test : MonoBehaviour {
 			}
 
 		);
-	}
+	}*/
 
 
 	void TestMakeCoffee(){

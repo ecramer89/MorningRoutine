@@ -1,11 +1,7 @@
 ﻿using System;
 public class PlayerAggregate : Aggregate {
 
-	protected DayAggregate day;
 
-	public PlayerAggregate() : base(){
-		this.day = new DayAggregate ();
-	}
 
 	public override Event[] execute(Command command){
 
@@ -13,9 +9,6 @@ public class PlayerAggregate : Aggregate {
 			return this.BeginNewGame ((BeginNewGame)command);
 		}
 
-		if(command.GetType() == typeof(CreateDay)){
-			return this.CreateDay ((CreateDay)command);
-		}
 
 		return new Event[]{};
 	}
@@ -24,9 +17,7 @@ public class PlayerAggregate : Aggregate {
 		if(evt.GetType() == typeof(NewGameBegun)){
 			this.OnNewGameBegun((NewGameBegun)evt);
 		}
-		if (evt.GetType () == typeof(DayCreated)) {
-			this.OnDayCreated ((DayCreated)evt);
-		}
+	
 	}
 
 
@@ -40,19 +31,7 @@ public class PlayerAggregate : Aggregate {
 
 	}
 
-	private Event[] CreateDay(CreateDay command){
 
-		if (this.id == Aggregate.NullId) {
-			throw new ValidationException ("id", "Player not found.");
-		}
-
-		return day.execute (command);
-	}
-
-
-	private void OnDayCreated(DayCreated evt){
-		this.day.hydrate (evt);
-	}
 
 	private void OnNewGameBegun(NewGameBegun evt){
 		this.id = evt.playerId;
