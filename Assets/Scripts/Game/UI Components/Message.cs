@@ -19,7 +19,8 @@ public class Message : MonoBehaviour {
 		instance = gameObject.GetComponent<Message> ();
 		text = gameObject.GetComponent<Text> ();
 
-		GameState.Instance.messageSet+= (newMessage, oldMessage) => {
+		GameState.Instance.messageSet+= () => {
+			string newMessage = GameState.Instance.MessageState.message;
 			text.text = newMessage;
 			gameObject.SetActive(newMessage.Length > 0);
 		};

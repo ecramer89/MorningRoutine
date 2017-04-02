@@ -9,7 +9,7 @@ public class GameServerInterface {
 		if (!response.error) {
 			ReadModel player = ModelRepository.Get (response.modelName,response.aggregateId);
 			GameReducer.Reduce (ActionTypes.NEW_GAME_BEGUN, player);
-			Debug.Log ($"Success: New Player {GameState.Instance.PlayerId}");
+			Debug.Log ($"Success: New Player");
 		} else
 			Debug.Log ("Failed");
 	}

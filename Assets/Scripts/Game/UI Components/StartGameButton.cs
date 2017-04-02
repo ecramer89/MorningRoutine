@@ -5,7 +5,7 @@ using UnityEngine;
 public class StartGameButton : MonoBehaviour {
 
 	void Start () {
-		GameState.Instance.playerIdSet += (int playerId) => {
+		GameState.Instance.playerFetched += () => {
 			gameObject.SetActive (false);
 		};
 	}

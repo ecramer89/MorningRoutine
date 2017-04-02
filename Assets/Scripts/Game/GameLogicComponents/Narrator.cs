@@ -8,9 +8,10 @@ public class Narrator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameObject.SetActive (false);
-		GameState.Instance.playerIdSet += (int playerId) => {
+		GameState.Instance.playerFetched += () => {
 			gameObject.SetActive (true);
-			ActionCreator.Instance.SetMessage("Hello");
+			string playerName = GameState.Instance.PlayerState.name;
+			ActionCreator.Instance.SetMessage($"Hello {playerName}.");
 		};
 		
 	}

@@ -13,41 +13,38 @@ public class GameState {
 	}
 
 
-
-
-	public PlayerState playerState = new PlayerState();
-	public delegate void PlayerIdHandler(int playerId);
-	public event PlayerIdHandler playerIdSet;
-	int playerId;
-	public int PlayerId{
+	PlayerState playerState = new PlayerState();
+	public delegate void PlayerStateHandler();
+	public event PlayerStateHandler playerFetched;
+	public PlayerState PlayerState{
 		get {
-			return playerId;
+			return playerState;
 		}
 		set {
-			playerState.id = value;
-			playerIdSet (playerState.id);
+			playerState = value;
+			playerFetched();
 		}
-
 	}
 
-	public MessageState messageState = new MessageState();
-	public delegate void MessageHandler(string newMessage, string oldMessage);
-	public event MessageHandler messageSet;
 
-	public string Message{
+	MessageState messageState = new MessageState();
+	public delegate void MessageStateHandler();
+	public event MessageStateHandler messageSet;
+
+	public MessageState MessageState{
 		get{
-			return messageState.message;
+			return messageState;
 		}
 		set {
-			string oldMessage = messageState.message;
-			messageState.message = value;
-			messageSet (messageState.message, oldMessage); 
+			messageState = value;
+			messageSet (); 
 		}
 	}
+		
 }
 
 
-//state structs
+//state structs.
 public struct PlayerState{
 	public int id; 
 	public string name;
@@ -57,3 +54,4 @@ public struct PlayerState{
 public struct MessageState{
 	public string message;
 }
+
