@@ -40,6 +40,22 @@ public class GameState {
 			messageSet (); 
 		}
 	}
+
+
+	OptionsState optionsState = new OptionsState ();
+	public delegate void OptionsStateHandler();
+	public event OptionsStateHandler optionsSet;
+
+	public OptionsState OptionsState{
+		get {
+			return optionsState;
+		}
+		set {
+			optionsState = value;
+			optionsSet ();
+		}
+
+	}
 		
 }
 
@@ -55,3 +71,6 @@ public struct MessageState{
 	public string message;
 }
 
+public struct OptionsState{
+	public bool allowed;
+}

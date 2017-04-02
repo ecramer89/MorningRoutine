@@ -74,7 +74,9 @@
      <Compile Include="Assets\Scripts\Backend\Services\Service.cs" />
      <Compile Include="Assets\Scripts\Environment.cs" />
      <Compile Include="Assets\Scripts\Game\Actions\ActionCreator.cs" />
+     <Compile Include="Assets\Scripts\Game\CommonPrefabs.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\Narrator.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogicComponents\Timer.cs" />
      <Compile Include="Assets\Scripts\Game\GameState\GameState.cs" />
      <Compile Include="Assets\Scripts\Game\Reducers\GameReducer.cs" />
      <Compile Include="Assets\Scripts\Game\Services\GameServerInterface.cs" />
