@@ -3,16 +3,19 @@ using UnityEngine;
 public class GameReducer  {
 
 
-	public static void Reduce(Actions type, ReadModel eventData){
-		Debug.Log (type);
+	public static void Reduce(ActionTypes type, System.Object eventData){
+		GameState state = GameState.Instance;
 		switch (type) {
-		case Actions.NEW_GAME_BEGUN:
-			GameState state = GameState.Instance;
-			state.PlayerId = eventData.Id;
-			Debug.Log ("called");
+		case ActionTypes.NEW_GAME_BEGUN:
+			ReadModel model = (ReadModel)eventData;
+			state.PlayerId = model.Id;
+			break;
+
+		case ActionTypes.MESSAGE_SET:
+			string message = (string)eventData;
+			state.Message = message;
 			break;
 		}
-
 	}
 
 }

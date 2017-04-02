@@ -73,10 +73,12 @@
      <Compile Include="Assets\Scripts\Backend\Services\ModelRepository.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\Service.cs" />
      <Compile Include="Assets\Scripts\Environment.cs" />
-     <Compile Include="Assets\Scripts\Game\Actions\Actions.cs" />
+     <Compile Include="Assets\Scripts\Game\Actions\ActionCreator.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogicComponents\Narrator.cs" />
      <Compile Include="Assets\Scripts\Game\GameState\GameState.cs" />
      <Compile Include="Assets\Scripts\Game\Reducers\GameReducer.cs" />
      <Compile Include="Assets\Scripts\Game\Services\GameServerInterface.cs" />
+     <Compile Include="Assets\Scripts\Game\UI Components\Message.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
