@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum ActionTypes {NEW_GAME_BEGUN, MESSAGE_SET, NARRATION_BEGUN, NARRATION_ENDED};
+public enum ActionTypes {NEW_GAME_BEGUN, MESSAGE_SET, NARRATION_BEGUN, NARRATION_ENDED, NPC_CREATED};
 
 public class ActionCreator : MonoBehaviour  {
 	GameServerInterface serverInterface;
@@ -19,6 +19,10 @@ public class ActionCreator : MonoBehaviour  {
 
 	public void BeginNewGame(){
 		serverInterface.BeginNewGame ();
+	}
+
+	public void CreateNPC(int npcId, string npcName, string npcGreeting){
+		serverInterface.CreateNPC (npcId, npcName, npcGreeting);
 	}
 
 	public void SetMessage(string message){

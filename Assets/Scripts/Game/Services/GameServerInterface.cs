@@ -13,4 +13,16 @@ public class GameServerInterface {
 		} else
 			Debug.Log ("Failed");
 	}
+
+
+	public void CreateNPC(int npcId, string npcName, string npcGreeting){
+		ServerResponse response = NPCController.CreateNPC (npcId, npcName, npcGreeting);
+		if (!response.error) {
+			ReadModel npc = ModelRepository.Get (response.modelName,response.aggregateId);
+			GameReducer.Reduce (ActionTypes.NPC_CREATED, npc);
+			Debug.Log ($"Success: New NPC");
+		} else
+			Debug.Log ("Failed");
+
+	}
 }

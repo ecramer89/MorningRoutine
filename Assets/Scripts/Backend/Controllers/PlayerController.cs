@@ -11,7 +11,7 @@ public class PlayerController  {
 		Command command = new BeginNewGame (playerId, playerName);
 		Aggregate player = new PlayerAggregate ();
 		bool success = CommandHandler.HandleCommand(player, playerId, command);
-		ServerResponse response = new ServerResponse (playerId, "player", !success);
+		ServerResponse response = new ServerResponse (playerId, ModelNameGetter.GetModelName(player.GetType()), !success);
 		return response;
 	}
 

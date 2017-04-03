@@ -48,16 +48,22 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Backend\Commands\BeginNewGame.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\Command.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\CreateNPC.cs" />
+     <Compile Include="Assets\Scripts\Backend\Controllers\NPCController.cs" />
      <Compile Include="Assets\Scripts\Backend\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Backend\CustomAttributes.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\Aggregate.cs" />
+     <Compile Include="Assets\Scripts\Backend\Domain\NPCAggregate.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\PlayerAggregate.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\NPCCreated.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
      <Compile Include="Assets\Scripts\Backend\Exceptions\ValidationException.cs" />
      <Compile Include="Assets\Scripts\Backend\Initialize.cs" />
+     <Compile Include="Assets\Scripts\Backend\ReadModels\NPCReadModel.cs" />
      <Compile Include="Assets\Scripts\Backend\ReadModels\PlayerReadModel.cs" />
      <Compile Include="Assets\Scripts\Backend\ReadModels\ReadModel.cs" />
+     <Compile Include="Assets\Scripts\Backend\Reducers\NPCReducer.cs" />
      <Compile Include="Assets\Scripts\Backend\Reducers\PlayerReducer.cs" />
      <Compile Include="Assets\Scripts\Backend\Reducers\Reducer.cs" />
      <Compile Include="Assets\Scripts\Backend\ServerResponses.cs" />
