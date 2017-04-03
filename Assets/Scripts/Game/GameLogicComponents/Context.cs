@@ -16,7 +16,10 @@ public class Context : MonoBehaviour {
 	private void CreateNPCs(){
 		string[] NPCData =  NPCInfo.text.Split(new string[]{System.Environment.NewLine}, System.StringSplitOptions.None);
 		for (int i = 0; i < NPCData.Length; i++) {
-			Debug.Log (NPCData [i]);
+			//create npc.
+			int NPCId;
+			string NPCName;
+			string NPCGreeting;
 		}
 
 	}
