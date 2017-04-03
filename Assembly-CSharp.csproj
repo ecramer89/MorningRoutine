@@ -70,6 +70,8 @@
      <Compile Include="Assets\Scripts\Environment.cs" />
      <Compile Include="Assets\Scripts\Game\Actions\ActionCreator.cs" />
      <Compile Include="Assets\Scripts\Game\CommonPrefabs.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogicComponents\Context.cs" />
+     <Compile Include="Assets\Scripts\Game\GameLogicComponents\ContextSetter.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\Narrator.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\Timer.cs" />
      <Compile Include="Assets\Scripts\Game\GameState\GameState.cs" />
@@ -79,6 +81,9 @@
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
+     <None Include="Assets\Contexts\CatTown\Incidentals\Profile.txt" />
+     <None Include="Assets\Contexts\CatTown\Storyline Characters\Georgia.txt" />
+     <None Include="Assets\Contexts\CatTown\Incidentals\Dialogue.txt" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
