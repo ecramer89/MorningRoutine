@@ -1,0 +1,4 @@
+TODO
+-NPC read model will have a string field that represents the text the NPC is currently saying
+-NPC aggregate will perform validations on the input string (i.e., regex check) to see whether the attempt to converse with the NPC results in a response
+-the event that would result should contain an id (id of the dialogue option) that can be used to access the corresponding response in the npc rad model and thereby set the active text field of the npc (i.e., responding to a conversation should be a read model not an aggregate concern)

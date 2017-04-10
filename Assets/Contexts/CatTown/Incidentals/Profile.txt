@@ -1,3 +1,0 @@
-{id:0,greeting:Hiya,name:Tomson}
-{id:1,greeting:Hello,name:Farrow}
-{id:2,greeting:Hello,name:Bailey}

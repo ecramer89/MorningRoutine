@@ -13,10 +13,10 @@ public class GameReducer  {
 
 		switch (type) {
 		case ActionTypes.NEW_GAME_BEGUN:
-			PlayerReadModel model = (PlayerReadModel)eventData;
+			PlayerReadModel playerReadModel = (PlayerReadModel)eventData;
 			PlayerState currentPlayerState = state.PlayerState;
-			currentPlayerState.id = model.Id;
-			currentPlayerState.name = model.name;
+			currentPlayerState.id = playerReadModel.Id;
+			currentPlayerState.name = playerReadModel.name;
 			GameState.Instance.PlayerState = currentPlayerState;
 			break;
 
@@ -37,6 +37,11 @@ public class GameReducer  {
 			currentNarrationState = state.NarrationState;
 			currentNarrationState.narrationOn = false;
 			state.NarrationState = currentNarrationState;
+			break;
+
+		case ActionTypes.CHARACTER_CREATED:
+			CharacterReadModel characterReadModel = (CharacterReadModel)eventData;
+			state.AddNPC (characterReadModel.Id);
 			break;
 		}
 	}

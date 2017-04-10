@@ -9,12 +9,11 @@ public class Narrator : MonoBehaviour {
 		gameObject.SetActive (false);
 	
 
-		GameState.Instance.playerFetched += () => {
+		/*GameState.Instance.playerFetched += () => {
 			gameObject.SetActive (true);
 			string playerName = GameState.Instance.PlayerState.name;
 			string[] introText = new string[]{
-				$"Hello {playerName}.",
-				"What would you like to do?"
+				""
 			};
 			int introTextIndex = 0;
 			Timer textTimer = GameObject.Instantiate(CommonPrefabs.Instance.Timer).GetComponent<Timer>();
@@ -32,7 +31,7 @@ public class Narrator : MonoBehaviour {
 			};
 			textTimer.StartTimer();
 			ActionCreator.Instance.BeginNarration();
-		};
+		};*/
 		
 	}
 

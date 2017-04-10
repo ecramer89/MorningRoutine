@@ -54,6 +54,21 @@ public class GameState {
 			narrationSet ();
 		}
 	}
+
+
+	NPCState npcState = new NPCState (new List<int>());
+	public delegate void NPCStateHandler(int id);
+	public event NPCStateHandler npcAdded = (newId)=>{};
+	public NPCState NPCState{
+		get {
+			return npcState;
+		}
+	}
+
+	public void AddNPC(int id){
+		NPCState.npcs.Add (id);
+		npcAdded (id);
+	}
 }
 
 
@@ -70,4 +85,11 @@ public struct MessageState{
 	
 public struct NarrationState{
 	public bool narrationOn;
+}
+	
+public struct NPCState{
+	public List<int> npcs;
+	public NPCState(List<int> npcs){
+		this.npcs = npcs;
+	}
 }
