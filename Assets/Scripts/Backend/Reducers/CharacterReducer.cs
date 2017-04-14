@@ -14,6 +14,14 @@ public class CharacterReducer : Reducer {
 			character.currentText = character.greeting;
 			table.UpdateModel (dialogueInitiated.characterId, character); //not necessary, since we are mutating the reference,
 			//but like to be explicit and will soon move to immutable structs for readmodels.
+			return;
+		}
+		if (type == typeof(DialogueAdvanced)) {
+			DialogueAdvanced dialogueAdvanced = (DialogueAdvanced)evt;
+			CharacterReadModel character = (CharacterReadModel)table.GetModel (dialogueAdvanced.characterId);
+			character.currentText = dialogueAdvanced.newNode.text;
+			table.UpdateModel (dialogueAdvanced.characterId, character);
+			return;
 		}
 	}
 

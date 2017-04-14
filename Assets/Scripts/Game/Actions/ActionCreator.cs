@@ -62,6 +62,17 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ("Failed");
 	}
 
+	public void AdvanceDialogue(int characterId, string input){
+		int playerId = GameState.Instance.PlayerState.id;
+		ServerResponse response = CharacterController.AdvanceDialogue (characterId, playerId, input);
+		if (!response.error) {
+			Debug.Log ($"Success: Advanced dialogue");
+			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateId);
+			GameReducer.Reduce (ActionTypes.MESSAGE_SET, character.currentText);
+		} else
+			Debug.Log ("Failed");
+	}
+
 	public void SetMessage(string message){
 		GameReducer.Reduce (ActionTypes.MESSAGE_SET, message);
 	}

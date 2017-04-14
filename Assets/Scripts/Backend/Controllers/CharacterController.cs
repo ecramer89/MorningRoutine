@@ -28,6 +28,14 @@ public class CharacterController {
 		return response;
 	}
 
+	public static ServerResponse AdvanceDialogue (int characterId, int playerId, string input){
+		Command command = new AdvanceDialogue (characterId, playerId, input);
+		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
+		bool success = CommandHandler.HandleCommand(character, characterId, command);
+		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+		return response;
+	}
+
 
 }
 
