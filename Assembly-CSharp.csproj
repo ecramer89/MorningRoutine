@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\Game\GameState\GameState.cs" />
      <Compile Include="Assets\Scripts\Game\Reducers\GameReducer.cs" />
      <Compile Include="Assets\Scripts\Game\Services\GameServerInterface.cs" />
+     <Compile Include="Assets\Scripts\Game\UI Components\InputField.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\Message.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartDemoButton.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
