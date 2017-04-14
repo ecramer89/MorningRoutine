@@ -42,18 +42,18 @@ public class GameState {
 	}
 
 
-	NPCState npcState = new NPCState (new List<int>());
-	public delegate void NPCStateHandler(int id);
-	public event NPCStateHandler npcAdded = (characterId)=>{};
-	public NPCState NPCState{
+	CharacterState characterState = new CharacterState (new List<int>());
+	public delegate void CharacterStateHandler(int id);
+	public event CharacterStateHandler characterAdded = (characterId)=>{};
+	public CharacterState CharacterState{
 		get {
-			return npcState;
+			return characterState;
 		}
 	}
 
-	public void AddNPC(int id){
-		NPCState.npcs.Add (id);
-		npcAdded (id);
+	public void AddCharacter(int id){
+		CharacterState.characters.Add (id);
+		characterAdded (id);
 	}
 }
 
@@ -69,13 +69,9 @@ public struct MessageState{
 	public string message;
 }
 	
-public struct NarrationState{
-	public bool narrationOn;
-}
-	
-public struct NPCState{
-	public List<int> npcs;
-	public NPCState(List<int> npcs){
-		this.npcs = npcs;
+public struct CharacterState{
+	public List<int> characters;
+	public CharacterState(List<int> characters){
+		this.characters = characters;
 	}
 }

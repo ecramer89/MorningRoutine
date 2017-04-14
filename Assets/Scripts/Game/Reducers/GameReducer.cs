@@ -31,7 +31,7 @@ public class GameReducer  {
 
 		case ActionTypes.CHARACTER_CREATED:
 			CharacterReadModel characterReadModel = (CharacterReadModel)eventData;
-			state.AddNPC (characterReadModel.Id);
+			state.AddCharacter (characterReadModel.Id);
 			break;
 
 		}

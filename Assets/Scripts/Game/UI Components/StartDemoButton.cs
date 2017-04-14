@@ -6,7 +6,7 @@ public class StartDemoButton : MonoBehaviour {
 
 	void Start () {
 		gameObject.SetActive (false);
-		GameState.Instance.npcAdded += (characterId) => {
+		GameState.Instance.characterAdded += (characterId) => {
 			gameObject.SetActive (true);
 		};
 
