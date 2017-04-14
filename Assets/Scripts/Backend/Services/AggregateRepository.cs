@@ -16,7 +16,6 @@ public class AggregateRepository : Service {
 				CreateTable (ModelNameGetter.GetModelName (type));
 			}
 		}
-
 	}
 
 	public static void CreateTable(string modelName){
@@ -59,10 +58,6 @@ public class AggregateTable{
 
 	public void InsertAggregate(int aggregateId, Aggregate initialValue){
 		entries.Add (aggregateId, initialValue);
-	}
-
-	public void UpdateAggregate(int aggregateId, Aggregate update){
-		entries [aggregateId] = update;
 	}
 
 	public Aggregate GetAggregate(int aggregateId){

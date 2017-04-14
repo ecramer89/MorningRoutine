@@ -1,0 +1,8 @@
+
+
+-since now we cache aggregates and only hydrate w/ most recent event in command handler, in the future (after we save the event stream as the unity save data) when the game restarts then only on the initial start, will we need to retrieve all of the events for a particular aggregate and use them to hydrate the initial aggregate (so that its up to date to receive the new commands)
+LinkedList<Event> events = EventStore.GetAllEventsFor (modelName, aggregateId); 		foreach (Event evt in events) { 			aggregate.hydrate (evt); 		}  
+
+-add validations to the input to create storyline (it will be easier on us, also:
+-need an even number of the step strings
+-each regex string must be a valid regex
