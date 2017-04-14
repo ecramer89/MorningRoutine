@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 
 public class CharacterAggregate : Aggregate {
 
@@ -16,16 +18,25 @@ public class CharacterAggregate : Aggregate {
 		if (command.GetType () == typeof(InitiateDialogue)) {
 			return this.InitiateDialogue ((InitiateDialogue)command);
 		}
+		if (command.GetType () == typeof(AdvanceDialogue)) {
+			return this.AdvanceDialogue ((AdvanceDialogue)command);
+		}
 			
 		return new Event[]{};
 	}
 
 	public override void hydrate(Event evt){
 		if(evt.GetType() == typeof(CharacterCreated)){
-			this.CharacterCreated((CharacterCreated)evt);
+			this.OnCharacterCreated((CharacterCreated)evt);
 		}
 		if (evt.GetType () == typeof(AddStorylineAdded)) {
-			this.StoryLineAdded ((AddStorylineAdded)evt);
+			this.OnStoryLineAdded ((AddStorylineAdded)evt);
+		}
+		if (evt.GetType () == typeof(DialogueInitiated)) {
+			this.OnDialogueInitiated ((DialogueInitiated)evt);
+		}
+		if (evt.GetType () == typeof(DialogueAdvanced)) {
+			this.OnDialogueAdvanced ((DialogueAdvanced)evt);
 		}
 	}
 
@@ -66,16 +77,39 @@ public class CharacterAggregate : Aggregate {
 
 	}
 
+	private Event[] AdvanceDialogue(AdvanceDialogue command){
+		if (this.id == Aggregate.NullId) {
+			throw new ValidationException ("id", "Character not found");
+		}
+		if (this.currentNode == null) {
+			throw new ValidationException ("", "Must initiate dialogue.");
+		}
+		List<StoryNode> children = this.currentNode.GetChildren (command.input);
+		if (children == null) {
+			throw new ValidationException ("input", "No response for ${input}");
+		}
+		int random = RandomNumberGenerator.Instance.Range(0, children.Count);
+		StoryNode newNode = children [random];
 
-	private void CharacterCreated(CharacterCreated evt){
-		this.id = evt.characterId;
-		string greeting = evt.greeting;
-		this.dialogueTree = new StoryNode (-1, null, @greeting, greeting);
-		this.currentNode = dialogueTree;
+		return new Event[]{
+			new DialogueAdvanced
+			(
+				command.characterId, command.playerId, 
+				command.input, newNode
+			)
+		};
 	}
 
 
-	private void StoryLineAdded(AddStorylineAdded evt){
+	private void OnCharacterCreated(CharacterCreated evt){
+		this.id = evt.characterId;
+		string greeting = evt.greeting;
+		this.dialogueTree = new StoryNode (-1, null, @greeting, greeting);
+		this.currentNode = null;
+	}
+
+
+	private void OnStoryLineAdded(AddStorylineAdded evt){
 		
 		StoryNode parent; 
 		if (evt.parent == null || evt.parent.Length == 0) {
@@ -92,6 +126,15 @@ public class CharacterAggregate : Aggregate {
 
 		StoryNode storyLine = StoryNode.ToStoryNode(evt.storylineId, parent.text, evt.entryPattern, evt.text, evt.steps);
 		parent.AddChild (storyLine);
+	}
+
+
+	private void OnDialogueInitiated(DialogueInitiated evt){
+		this.currentNode = dialogueTree;
+	}
+
+	private void OnDialogueAdvanced(DialogueAdvanced evt){
+		this.currentNode = evt.newNode;
 	}
 		
 }

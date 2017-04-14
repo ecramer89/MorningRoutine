@@ -1,4 +1,4 @@
-
+-think about what should happen if the user enters an input that matches more than one of the regular expressions that lead to a collection of child nodes, for a given node. axtually- i think we should reward specifity. so return the first one that matches exact.
 
 -since now we cache aggregates and only hydrate w/ most recent event in command handler, in the future (after we save the event stream as the unity save data) when the game restarts then only on the initial start, will we need to retrieve all of the events for a particular aggregate and use them to hydrate the initial aggregate (so that its up to date to receive the new commands)
 LinkedList<Event> events = EventStore.GetAllEventsFor (modelName, aggregateId); 		foreach (Event evt in events) { 			aggregate.hydrate (evt); 		}  

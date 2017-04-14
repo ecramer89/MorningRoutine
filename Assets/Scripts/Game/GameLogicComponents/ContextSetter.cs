@@ -13,7 +13,7 @@ public class ContextSetter : MonoBehaviour {
 
 
 	void LoadRandomContext(){
-		int random = Random.Range(0, contexts.Length);
+		int random = RandomNumberGenerator.Instance.Range(0, contexts.Length);
 		Context context = contexts[random].GetComponent<Context>();
 		context.Load();
 	}

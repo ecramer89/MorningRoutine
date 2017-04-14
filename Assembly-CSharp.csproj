@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Backend\Commands\AddStoryline.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\AdvanceDialogue.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\BeginNewGame.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\CreateCharacter.cs" />
@@ -60,6 +61,7 @@
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNode.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNodeData.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\CharacterCreated.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\DialogueAdvanced.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\DialogueInitiated.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
@@ -79,6 +81,7 @@
      <Compile Include="Assets\Scripts\Backend\Services\GetModelName.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\IntegerGUIDCreator.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\ModelRepository.cs" />
+     <Compile Include="Assets\Scripts\Backend\Services\RandomNumberGenerator.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\Service.cs" />
      <Compile Include="Assets\Scripts\Environment.cs" />
      <Compile Include="Assets\Scripts\Game\Actions\ActionCreator.cs" />

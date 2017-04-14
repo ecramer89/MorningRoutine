@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public struct StoryNodeData {
 	public string text;
@@ -60,6 +61,17 @@ public class StoryNode  {
 				toVisit.Enqueue (grandChild);
 			}
 
+		}
+
+		return null;
+	}
+
+	//return the first setof children that are s.t. the user's input matches the entry regex for those children.
+	//return null if input doesn't match any regexes.
+	public List<StoryNode> GetChildren(string userInput){
+		foreach (string regex in children.Keys) {
+			if (Regex.Matches (userInput, regex).Count > 0)
+				return children [regex];
 		}
 
 		return null;
