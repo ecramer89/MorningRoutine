@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //invoke through the action creator game object
+//todo eliminate this layer;move all of this functionality into the action creator file.
 public class GameServerInterface {
 
 	public void BeginNewGame(){
@@ -20,7 +21,6 @@ public class GameServerInterface {
 		
 		ServerResponse response = CharacterController.CreateCharacter (id, name, greeting);
 		if (!response.error) {
-			
 			ReadModel character = ModelRepository.Get (response.modelName,response.aggregateId);
 			GameReducer.Reduce (ActionTypes.CHARACTER_CREATED, character);
 			Debug.Log ($"Success: New Character {name}");
@@ -37,6 +37,11 @@ public class GameServerInterface {
 			Debug.Log ($"Success: New StoryLine");
 		} else
 			Debug.Log ("Failed");
+
+	}
+
+	public ServerResponse InitiateDialogue(int characterId, int playerId){
+		return CharacterController.InitiateDialogue (characterId, playerId);
 
 	}
 }

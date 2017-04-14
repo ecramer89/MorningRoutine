@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Backend\Commands\BeginNewGame.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\CreateCharacter.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\InitiateDialogue.cs" />
      <Compile Include="Assets\Scripts\Backend\Controllers\CharacterController.cs" />
      <Compile Include="Assets\Scripts\Backend\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Backend\CustomAttributes.cs" />
@@ -59,6 +60,7 @@
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNode.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNodeData.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\CharacterCreated.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\DialogueInitiated.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\StorylineAdded.cs" />
@@ -88,6 +90,7 @@
      <Compile Include="Assets\Scripts\Game\Reducers\GameReducer.cs" />
      <Compile Include="Assets\Scripts\Game\Services\GameServerInterface.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\Message.cs" />
+     <Compile Include="Assets\Scripts\Game\UI Components\StartDemoButton.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />

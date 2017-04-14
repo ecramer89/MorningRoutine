@@ -7,6 +7,8 @@ public class GameReducer  {
 	 * -retrieve the current game state object you want to update
 	 * -mutate properties on the game state object, using data from the read model
 	 * -re-assign the new game state object to the GameState
+	 * 
+	 * todo: maybe have a map of delegates to action types so we dont need to worry about the silly duplicate variable names thing
 	 * */
 	public static void Reduce(ActionTypes type, System.Object eventData = null){
 		GameState state = GameState.Instance;
@@ -42,6 +44,11 @@ public class GameReducer  {
 		case ActionTypes.CHARACTER_CREATED:
 			CharacterReadModel characterReadModel = (CharacterReadModel)eventData;
 			state.AddNPC (characterReadModel.Id);
+			break;
+
+		case ActionTypes.DIALOGUE_INITIATED:
+			CharacterReadModel _characterReadModel = (CharacterReadModel)eventData;
+
 			break;
 		}
 	}

@@ -58,7 +58,7 @@ public class GameState {
 
 	NPCState npcState = new NPCState (new List<int>());
 	public delegate void NPCStateHandler(int id);
-	public event NPCStateHandler npcAdded = (newId)=>{};
+	public event NPCStateHandler npcAdded = (characterId)=>{};
 	public NPCState NPCState{
 		get {
 			return npcState;

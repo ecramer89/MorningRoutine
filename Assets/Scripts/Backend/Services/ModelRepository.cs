@@ -50,6 +50,10 @@ public class ModelTable{
 	    entries.Add (aggregateId, initialValue);
 	}
 
+	public void UpdateModel(int aggregateId, ReadModel update){
+		entries [aggregateId] = update;
+	}
+
 	public ReadModel GetModel(int aggregateId){
 		ReadModel model;
 		if (entries.TryGetValue (aggregateId, out model)) {

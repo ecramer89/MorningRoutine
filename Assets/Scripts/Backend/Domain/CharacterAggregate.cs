@@ -13,6 +13,9 @@ public class CharacterAggregate : Aggregate {
 		if (command.GetType () == typeof(AddStoryline)) {
 			return this.AddStoryLine ((AddStoryline)command);
 		}
+		if (command.GetType () == typeof(InitiateDialogue)) {
+			return this.InitiateDialogue ((InitiateDialogue)command);
+		}
 			
 		return new Event[]{};
 	}
@@ -49,6 +52,18 @@ public class CharacterAggregate : Aggregate {
 			new AddStorylineAdded(command.characterId, command.storylineId, 
 				command.parent, command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
 		};
+	}
+
+	private Event[] InitiateDialogue(InitiateDialogue command){
+		if (this.id == Aggregate.NullId) {
+			throw new ValidationException ("id", "Character not found");
+		}
+
+
+		return new Event[] {
+			new DialogueInitiated(command.characterId, command.playerId)
+		};
+
 	}
 
 

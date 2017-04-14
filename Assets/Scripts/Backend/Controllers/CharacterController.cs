@@ -19,6 +19,14 @@ public class CharacterController {
 		return response;
 
 	}
+
+	public static ServerResponse InitiateDialogue(int characterId, int playerId){
+		Command command = new InitiateDialogue (characterId, playerId);
+		Aggregate character = new CharacterAggregate (); //will almost certainly want to cache, dont want to rebuild entre tree each time we add a new storyline.
+		bool success = CommandHandler.HandleCommand(character, characterId, command);
+		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+		return response;
+	}
 }
 
 

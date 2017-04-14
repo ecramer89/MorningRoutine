@@ -7,8 +7,11 @@ public class CharacterReadModel : ReadModel {
 
 	public string name;
 	public string greeting;
+	public string currentText;
+
 	public CharacterReadModel(int id, string name, string greeting) : base(id){
 		this.name = name;
 		this.greeting = greeting;
+		this.currentText = "";
 	}
 }
