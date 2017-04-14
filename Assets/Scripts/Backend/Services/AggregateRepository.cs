@@ -32,8 +32,19 @@ public class AggregateRepository : Service {
 
 	}
 
-	public static Aggregate Get(string modelName, int aggregateId){
-		return GetTable (modelName).GetAggregate (aggregateId);
+	public static Aggregate GetOrCreate(Type aggregateType, int aggregateId){
+		string modelName = ModelNameGetter.GetModelName (aggregateType);
+		Aggregate aggregate;
+		AggregateTable table = GetTable (modelName);
+		try{
+			aggregate = table.GetAggregate (aggregateId);
+		}
+		catch(KeyNotFoundException k){
+			ConstructorInfo cInfo = aggregateType.GetConstructor (Type.EmptyTypes);
+			aggregate = (Aggregate)cInfo.Invoke (Type.EmptyTypes);
+			table.InsertAggregate (aggregateId, aggregate);
+		}
+		return aggregate;
 	}
 
 }
