@@ -16,7 +16,6 @@ public class ActionCreator : MonoBehaviour  {
 		get{
 			return instance;
 		}
-
 	}
 
 	void Awake(){

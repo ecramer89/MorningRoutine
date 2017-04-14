@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\Backend\Reducers\PlayerReducer.cs" />
      <Compile Include="Assets\Scripts\Backend\Reducers\Reducer.cs" />
      <Compile Include="Assets\Scripts\Backend\ServerResponses.cs" />
+     <Compile Include="Assets\Scripts\Backend\Services\AggregateRepository.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\CommandHandler.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\EventStore.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\GetModelName.cs" />
