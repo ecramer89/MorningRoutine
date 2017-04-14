@@ -3,10 +3,8 @@
 public enum ActionTypes {
 	NEW_GAME_BEGUN, 
 	MESSAGE_SET, 
-	NARRATION_BEGUN, 
-	NARRATION_ENDED, 
 	CHARACTER_CREATED,
-	DIALOGUE_INITIATED
+	CHARACTER_SET
 };
 
 public class ActionCreator : MonoBehaviour  {
@@ -58,13 +56,15 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ($"Success: Initiating dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateId);
 			GameReducer.Reduce (ActionTypes.MESSAGE_SET, character.greeting);
+			GameReducer.Reduce (ActionTypes.CHARACTER_SET, character);
 		} else
 			Debug.Log ("Failed");
 	}
 
-	public void AdvanceDialogue(int characterId, string input){
+	public void AdvanceDialogue(string userInput){
+		int characterId = GameState.Instance.CharacterState.currentCharacter;
 		int playerId = GameState.Instance.PlayerState.id;
-		ServerResponse response = CharacterController.AdvanceDialogue (characterId, playerId, input);
+		ServerResponse response = CharacterController.AdvanceDialogue (characterId, playerId, userInput);
 		if (!response.error) {
 			Debug.Log ($"Success: Advanced dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateId);
@@ -76,13 +76,6 @@ public class ActionCreator : MonoBehaviour  {
 	public void SetMessage(string message){
 		GameReducer.Reduce (ActionTypes.MESSAGE_SET, message);
 	}
-
-	public void BeginNarration(){
-		GameReducer.Reduce (ActionTypes.NARRATION_BEGUN);
-	}
-
-	public void EndNarration(){
-		GameReducer.Reduce (ActionTypes.NARRATION_ENDED);
-	}
+					
 
 }

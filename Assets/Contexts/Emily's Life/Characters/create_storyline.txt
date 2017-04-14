@@ -1,4 +1,4 @@
 characterID<storylineID<parent<entry<text<entry0<text0entry1<text1< ...entryn<textn
-0<0<<(how are)\w*you\?<I'm okay.<\w*(work\?)<Work is alright. I think we're almost finished our fixed price contract with the current client.<\w*you(r)?\w*contract\?<I'm not sure what will happen to me. I suppose I will find out soon enough if they think I'm valuable enough to keep on.
+0<0<<how are you\?<I'm okay.<\w*(work\?)<Work is alright. I think we're almost finished our fixed price contract with the current client.<\w*you(r)?\w*contract\?<I'm not sure what will happen to me. I suppose I will find out soon enough if they think I'm valuable enough to keep on.
 0<1<I'm okay.<\w(work\?)<I don't know. A lot of new people have been floating by the office lately, including another girl.<why\w*girl\w*(matter|important)\?<Well it probably sounds dumb, but I think part of why they hired me is that I'm a girl and the HR person wants gender parity... so the more girls that come on, the less special I seem.
 0<2<I'm okay.<\w(family\?)<Why do care about my family?<\w*(curious)\w*<Well, I never see them, so...

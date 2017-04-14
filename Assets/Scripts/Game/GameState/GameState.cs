@@ -45,33 +45,41 @@ public class GameState {
 	CharacterState characterState = new CharacterState (new List<int>());
 	public delegate void CharacterStateHandler(int id);
 	public event CharacterStateHandler characterAdded = (characterId)=>{};
+	public event CharacterStateHandler characterSet = (characterId)=>{};
 	public CharacterState CharacterState{
 		get {
 			return characterState;
 		}
 	}
 
-	public void AddCharacter(int id){
-		CharacterState.characters.Add (id);
-		characterAdded (id);
+	public void AddCharacter(int characterId){
+		CharacterState.characters.Add (characterId);
+		characterAdded (characterId);
+	}
+
+	public void SetCharacter(int characterId){
+		CharacterState.currentCharacter = characterId;
+		characterSet (characterId);
 	}
 }
 
 
-//state structs.
-public struct PlayerState{
+//state classes.
+public class PlayerState{
 	public int id; 
 	public string name;
 
 }
 
-public struct MessageState{
+public class MessageState{
 	public string message;
 }
 	
-public struct CharacterState{
+public class CharacterState{
 	public List<int> characters;
+	public int currentCharacter;
 	public CharacterState(List<int> characters){
 		this.characters = characters;
+		this.currentCharacter = Aggregate.NullId;
 	}
 }
