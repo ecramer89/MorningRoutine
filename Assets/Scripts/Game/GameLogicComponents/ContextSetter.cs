@@ -7,13 +7,7 @@ public class ContextSetter : MonoBehaviour {
 	void Start () {
 
 		GameState.Instance.playerFetched += () => {
-			if(GameState.Instance.NarrationState.narrationOn){
-				GameState.Instance.narrationSet += () =>{
-					LoadRandomContext();
-				};
-			} else {
 				LoadRandomContext();
-			}
 		};
 	}
 

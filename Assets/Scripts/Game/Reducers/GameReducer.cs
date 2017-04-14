@@ -29,27 +29,11 @@ public class GameReducer  {
 			state.MessageState = currentMessageState;
 			break;
 
-		case ActionTypes.NARRATION_BEGUN:
-			NarrationState currentNarrationState = state.NarrationState;
-			currentNarrationState.narrationOn = true;
-			state.NarrationState = currentNarrationState;
-			break;
-
-		case ActionTypes.NARRATION_ENDED:
-			currentNarrationState = state.NarrationState;
-			currentNarrationState.narrationOn = false;
-			state.NarrationState = currentNarrationState;
-			break;
-
 		case ActionTypes.CHARACTER_CREATED:
 			CharacterReadModel characterReadModel = (CharacterReadModel)eventData;
 			state.AddNPC (characterReadModel.Id);
 			break;
 
-		case ActionTypes.DIALOGUE_INITIATED:
-			CharacterReadModel _characterReadModel = (CharacterReadModel)eventData;
-
-			break;
 		}
 	}
 

@@ -84,7 +84,6 @@
      <Compile Include="Assets\Scripts\Game\CommonPrefabs.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\Context.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\ContextSetter.cs" />
-     <Compile Include="Assets\Scripts\Game\GameLogicComponents\Narrator.cs" />
      <Compile Include="Assets\Scripts\Game\GameLogicComponents\Timer.cs" />
      <Compile Include="Assets\Scripts\Game\GameState\GameState.cs" />
      <Compile Include="Assets\Scripts\Game\Reducers\GameReducer.cs" />

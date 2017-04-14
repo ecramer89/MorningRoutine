@@ -41,20 +41,6 @@ public class GameState {
 		}
 	}
 
-	NarrationState narrationState = new NarrationState ();
-	public delegate void NarrationStateHandler();
-	public event NarrationStateHandler narrationSet=()=>{};
-
-	public NarrationState NarrationState{
-		get{
-			return narrationState;
-		}
-		set{
-			narrationState = value;
-			narrationSet ();
-		}
-	}
-
 
 	NPCState npcState = new NPCState (new List<int>());
 	public delegate void NPCStateHandler(int id);
