@@ -1,5 +1,25 @@
 characterID<storylineID<parent<entry<text<entry0<text0entry1<text1< ...entryn<textn
-0<0< <how are you\?<I'm okay.<work\w*\?<Work is alright. We're hiring some new people.<cat dog<They're okay. One of them is a woman.<why\w*(matter|difference|relevant)\?<I used to be the only girl.
-0<1<I'm okay.<E<Dog<F<Sonny
-0<2<Chase<G<Lily<A<Sammy
+%0
+<0
+< 
+<\w*how are you\w*\?+
+<I'm okay.
+<\w*work\w*\?+
+<Work is alright. We're hiring some new people.
+<\w*((you)?(like|feel about)them\?)|they(\w{3}\w*)\?+
+<They're okay. One of them is a woman.
+<why\w*(matter|difference|relevant)\w*\?+
+<I used to be the only girl.
+%0
+<1
+<
+<\w*(hi|hello|greetings|salutations|i come in peace)\w* 
+<It's nice to meet you.
+<\w*what\w*(you\w*(like|love|into))|(hobbies|activities)\w*\?+\w*
+<I like programming. It's my job now. I do it in my spare time, too. 
+<\w*(projects|particular)\w*\?+
+<Well, yes. I've been working on sort of an interactive story... Mostly I wanted to build something that would enable me to create dynamic characters and worlds. it's sort of hard to explain.
+<\w*I\w*see it\w*\??
+<Haha, not yet.
+
 

@@ -5,7 +5,8 @@ using UnityEngine;
 using System;
 
 public class Context : MonoBehaviour {
-	char[] delimiterChars = {'<'};
+	char[] storyLineDelimiterChar = { '%' };
+	char[] fieldDelimiterChar = {'<'};
 	public TextAsset createCharacters;
 	public TextAsset storyLines;
 
@@ -19,7 +20,7 @@ public class Context : MonoBehaviour {
 	private void CreateCharacters(){
 		string[] characterData = createCharacters.text.Split (new string[]{ System.Environment.NewLine }, System.StringSplitOptions.None);
 		for (int i = 1; i < characterData.Length; i++) {
-			string[] fieldValues = characterData [i].Split (delimiterChars, System.StringSplitOptions.None);
+			string[] fieldValues = characterData [i].Split (fieldDelimiterChar, System.StringSplitOptions.None);
 			if (fieldValues.Length >= 3) {
 				int id;
 				if (Int32.TryParse (fieldValues [0], out id)) {
@@ -32,9 +33,9 @@ public class Context : MonoBehaviour {
 	}
 
 	private void AddStoryLines(){
-		string[] storyLineData = storyLines.text.Split(new string[]{System.Environment.NewLine}, System.StringSplitOptions.None);
+		string[] storyLineData = storyLines.text.Split(storyLineDelimiterChar, System.StringSplitOptions.None);
 		for (int i = 1; i<storyLineData.Length; i++) {
-			string[] fieldValues = storyLineData[i].Split (delimiterChars, System.StringSplitOptions.None);
+			string[] fieldValues = storyLineData[i].Split (fieldDelimiterChar, System.StringSplitOptions.None);
 			if (fieldValues.Length >= 5) {
 				try{
 					int characterId = Int32.Parse(fieldValues[0]);
