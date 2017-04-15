@@ -4,13 +4,13 @@ public class AddStorylineAdded : Event {
 	public int storylineId;
 	public string parent;
 	public string entryPattern;
-	public StoryNodeData[] steps;
+	public string[] steps;
 	public float requiredLevel;
 	public int[] completeFirst;
 	public string text;
 
 	public AddStorylineAdded(int characterId, int storylineId, string parent, 
-		string entry, StoryNodeData[] steps, string text, float requiredLevel = 0, 
+		string entry, string[] steps, string text, float requiredLevel = 0, 
 		int[] completeFirst= null){
 		this.characterId = characterId;
 		this.storylineId = storylineId;
