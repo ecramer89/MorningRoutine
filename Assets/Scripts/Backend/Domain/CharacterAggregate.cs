@@ -59,11 +59,25 @@ public class CharacterAggregate : Aggregate {
 		if (command.steps.Length % 2 != 0) {
 			throw new ValidationException ("steps", "Each step requires an entry pattern and a message (length of array should be even- check the text file. Are you missing a field?)");
 		}
+		if (command.entryPattern.Length == 0) {
+			throw new ValidationException ("entryPattern", "Entry pattern can't be empty.");
+		}
+		if (command.text.Length == 0) {
+			throw new ValidationException ("text", "Text can't be empty.");
+		}
+		for(int i=0;i<command.steps.Length; i++){
+			string stepString = command.steps [i];
+			if (stepString.Length == 0) {
+				string stepField = "step-" + ((i % 2 == 0) ? "entryPattern" : "text");
+				throw new ValidationException (stepField, $"{stepField} can't be empty; check the values for {(i/2)+1}th step");
+			}
+		}
+			
+		string entryPattern = '@' + command.entryPattern;
 
-	
 		return new Event[] {
 			new AddStorylineAdded(command.characterId, command.storylineId, 
-				command.parent, command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
+				command.parent, entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
 		};
 	}
 
@@ -84,7 +98,7 @@ public class CharacterAggregate : Aggregate {
 			throw new ValidationException ("id", "Character not found");
 		}
 		if (this.currentNode == null) {
-			throw new ValidationException ("", "Must initiate dialogue.");
+			throw new ValidationException ("", "No dialogue initiated.");
 		}
 		List<StoryNode> children = this.currentNode.GetChildren (command.input);
 		if (children == null) {
@@ -146,6 +160,10 @@ public class CharacterAggregate : Aggregate {
 
 	private void OnDialogueAdvanced(DialogueAdvanced evt){
 		this.currentNode = evt.newNode;
+	}
+
+	private string FormatStringAsRegex(string pattern){
+	  	return '@' + pattern;
 	}
 		
 }

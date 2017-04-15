@@ -40,7 +40,7 @@ public class Context : MonoBehaviour {
 					int characterId = Int32.Parse(fieldValues[0]);
 					int storyLineId = Int32.Parse(fieldValues[1]);
 					string parentText = fieldValues[2].Trim();
-					string entryPattern = @fieldValues[3].Trim();
+					string entryPattern = fieldValues[3].Trim();
 					string text = fieldValues[4].Trim();
 					string[] steps = new string[fieldValues.Length - 5];
 					for(int j=5;j<fieldValues.Length;j++){
