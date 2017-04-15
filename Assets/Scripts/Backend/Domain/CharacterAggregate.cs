@@ -73,11 +73,9 @@ public class CharacterAggregate : Aggregate {
 			}
 		}
 			
-		string entryPattern = '@' + command.entryPattern;
-
 		return new Event[] {
 			new AddStorylineAdded(command.characterId, command.storylineId, 
-				command.parent, entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
+				command.parent, @command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
 		};
 	}
 
@@ -162,8 +160,6 @@ public class CharacterAggregate : Aggregate {
 		this.currentNode = evt.newNode;
 	}
 
-	private string FormatStringAsRegex(string pattern){
-	  	return '@' + pattern;
-	}
+
 		
 }
