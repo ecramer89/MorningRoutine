@@ -5,13 +5,13 @@ public class AddStoryline : Command {
 	public int storylineId;
 	public string parent;
 	public string entryPattern; //must have syntax of regular expression pattern. e.g. @"\d+"
-	public StoryNodeData[] steps;
+	public string[] steps;
 	public float requiredLevel;
 	public int[] completeFirst;
 	public string text;
 
 	public AddStoryline(int characterId, int storylineId, string parent, 
-		string entryPattern, StoryNodeData[] steps, string text, float requiredLevel = 0, 
+		string entryPattern, string[] steps, string text, float requiredLevel = 0, 
 		int[] completeFirst= null){
 		this.characterId = characterId;
 		this.storylineId = storylineId;

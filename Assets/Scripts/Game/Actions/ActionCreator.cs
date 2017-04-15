@@ -40,7 +40,7 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ("Failed");
 	}
 
-	public void AddStoryLine(int characterId, int storyLineId, string parentText, string entryPattern, string text, StoryNodeData[] steps){
+	public void AddStoryLine(int characterId, int storyLineId, string parentText, string entryPattern, string text, string[] steps){
 		ServerResponse response = CharacterController.AddStoryLine (characterId, storyLineId, parentText, entryPattern, 
 			text, steps);
 		if (!response.error) {

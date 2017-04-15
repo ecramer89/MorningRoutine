@@ -42,18 +42,10 @@ public class Context : MonoBehaviour {
 					string parentText = fieldValues[2].Trim();
 					string entryPattern = @fieldValues[3].Trim();
 					string text = fieldValues[4].Trim();
-					StoryNodeData[] steps;
-
-					if(fieldValues.Length > 6){
-						steps = new StoryNodeData[(fieldValues.Length - 5)/2];
-						for(int j=6, k=0;j<fieldValues.Length;j+=2, k++){
-							string stepEntryPattern = @fieldValues[j-1];
-							string stepText = fieldValues[j];
-							StoryNodeData storyNodeData = new StoryNodeData(stepText, stepEntryPattern);
-							steps[k]=storyNodeData;
-						}
-					} else steps = new StoryNodeData[]{};
-
+					string[] steps = new string[fieldValues.Length - 5];
+					for(int j=5;j<fieldValues.Length;j++){
+						steps[j-5]=fieldValues[j];
+					}
 					ActionCreator.Instance.AddStoryLine(characterId, storyLineId, parentText, entryPattern, text, steps);
 
 				}

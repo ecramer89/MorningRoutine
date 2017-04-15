@@ -56,16 +56,21 @@ public class CharacterAggregate : Aggregate {
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
 		}
+		if (command.steps.Length % 2 != 0) {
+			throw new ValidationException ("steps", "Each step requires an entry pattern and a message (length of array should be even- check the text file. Are you missing a field?)");
+		}
 
-		//todo field validations? entry pattern needs the @, steps must have even length, every second must be form of a regex
-		//i don't want the command to make it into storynode data.
-		//steps should be:
-		//length 2
-		//1: entry B text cat.
-		//2. entry C text chase
+		StoryNodeData[] steps = new StoryNodeData[(command.steps.Length)/2];
+		for (int j = 0, i=0; j < command.steps.Length - 1; j += 2, i++) {
+			string stepEntryPattern = @command.steps [j];
+			string stepText = command.steps [j + 1];
+			StoryNodeData storyNodeData = new StoryNodeData (stepText, stepEntryPattern);
+			steps [i] = storyNodeData;
+		}
+			
 		return new Event[] {
 			new AddStorylineAdded(command.characterId, command.storylineId, 
-				command.parent, command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
+				command.parent, command.entryPattern, steps, command.text, command.requiredLevel, command.completeFirst)
 		};
 	}
 
@@ -133,6 +138,7 @@ public class CharacterAggregate : Aggregate {
 		//steps:
 		//
 		StoryNode storyLine = StoryNode.ToStoryNode(evt.storylineId, parent.text, evt.entryPattern, evt.text, evt.steps);
+
 		parent.AddChild (storyLine);
 	}
 

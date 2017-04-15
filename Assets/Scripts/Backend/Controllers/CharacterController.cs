@@ -11,7 +11,7 @@ public class CharacterController {
 	}
 
 	public static ServerResponse AddStoryLine(int characterId, int storyLineId, string parentText, string entryPattern, string text,
-		StoryNodeData[] steps){
+		string[] steps){
 		Command command = new AddStoryline (characterId, storyLineId, parentText, entryPattern, steps, text);
 		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
 		bool success = CommandHandler.HandleCommand(character, characterId, command);
