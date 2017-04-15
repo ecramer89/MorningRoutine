@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using System.Text.RegularExpressions;
 
 public class Test : MonoBehaviour {
 	
@@ -180,6 +180,14 @@ public class Test : MonoBehaviour {
 	}*/
 
 
+
+	//testing how regular expression match method works
+
+	void TestRegexMatches(){
+
+
+
+	}
 
 
 		

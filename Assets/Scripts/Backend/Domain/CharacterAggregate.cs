@@ -98,7 +98,11 @@ public class CharacterAggregate : Aggregate {
 		if (this.currentNode == null) {
 			throw new ValidationException ("", "No dialogue initiated.");
 		}
-		List<StoryNode> children = this.currentNode.GetChildren (command.input);
+		string formattedInput = FormatUserInput (command.input);
+		if (formattedInput.Length == 0) {
+			throw new ValidationException ("input", "Input can't be empty.");
+		}
+		List<StoryNode> children = this.currentNode.GetChildren (formattedInput);
 		if (children == null) {
 			throw new ValidationException ("input", $"No response for {command.input}");
 		}
@@ -140,7 +144,7 @@ public class CharacterAggregate : Aggregate {
 
 		StoryNodeData[] steps = new StoryNodeData[(evt.steps.Length)/2];
 		for (int j = 0, i=0; j < evt.steps.Length - 1; j += 2, i++) {
-			string stepEntryPattern = @evt.steps [j];
+			string stepEntryPattern = FormatEntryRegex(evt.steps [j]);
 			string stepText = evt.steps [j + 1];
 			StoryNodeData storyNodeData = new StoryNodeData (stepText, stepEntryPattern);
 			steps [i] = storyNodeData;
@@ -159,6 +163,15 @@ public class CharacterAggregate : Aggregate {
 	private void OnDialogueAdvanced(DialogueAdvanced evt){
 		this.currentNode = evt.newNode;
 	}
+
+	private string FormatUserInput(string userInput){
+		return userInput.Trim ().ToLower ().Replace (" ", "");
+	}
+
+	private string FormatEntryRegex(string regexString){
+		return @regexString;
+	}
+
 
 
 		

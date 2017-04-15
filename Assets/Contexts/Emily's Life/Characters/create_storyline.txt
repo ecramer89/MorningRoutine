@@ -1,5 +1,5 @@
 characterID<storylineID<parent<entry<text<entry0<text0entry1<text1< ...entryn<textn
-0<0< <A<Start<B<Cat<C<Chase<D<Vesper
-0<1<Start<E<Dog<F<Sonny
+0<0< <how are you\?<I'm okay.<work\w*\?<Work is alright. We're hiring some new people.<cat dog<They're okay. One of them is a woman.<why\w*(matter|difference|relevant)\?<I used to be the only girl.
+0<1<I'm okay.<E<Dog<F<Sonny
 0<2<Chase<G<Lily<A<Sammy
 

@@ -44,8 +44,7 @@ public class StoryNode  {
 
 	}
 
-    //BFS
-	//switch == to a case insensitive comparison.
+	//BFS; find the shallowest node whose text matches that of the specified parent text.
 	public StoryNode FindParent(string parentText){
 		if(Regex.Matches(this.text, parentText, RegexOptions.IgnoreCase).Count > 0) return this;
 		Queue<StoryNode> toVisit = new Queue<StoryNode> ();
@@ -60,7 +59,6 @@ public class StoryNode  {
 			foreach (StoryNode grandChild in next.GetChildren()) {
 				toVisit.Enqueue (grandChild);
 			}
-
 		}
 
 		return null;
@@ -70,7 +68,7 @@ public class StoryNode  {
 	//return null if input doesn't match any regexes.
 	public List<StoryNode> GetChildren(string userInput){
 		foreach (string regex in children.Keys) {
-			if (Regex.Matches (userInput, regex, RegexOptions.IgnoreCase).Count > 0)
+			if (Regex.Matches (userInput,regex, RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace).Count > 0)
 				return children [regex];
 		}
 
