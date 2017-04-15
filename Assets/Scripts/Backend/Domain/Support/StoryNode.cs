@@ -47,6 +47,7 @@ public class StoryNode  {
     //BFS
 	//switch == to a case insensitive comparison.
 	public StoryNode FindParent(string parentText){
+		parentText = parentText.ToLower ();
 		if(parentText == this.text) return this;
 		Queue<StoryNode> toVisit = new Queue<StoryNode> ();
 		foreach (StoryNode child in GetChildren()) {
@@ -54,7 +55,7 @@ public class StoryNode  {
 		}
 		while (toVisit.Count > 0) {
 			StoryNode next = toVisit.Dequeue ();
-			if (next.text == parentText) {
+			if (next.text.ToLower() == parentText) {
 				return next;
 			}
 			foreach (StoryNode grandChild in next.GetChildren()) {
@@ -91,13 +92,14 @@ public class StoryNode  {
 		completeFirst.Add (storyLineId);
 	}
 
+	//e.g., length =2 
 	public static StoryNode ToStoryNode(int id, string parentText, string entryPattern, string text, StoryNodeData[] steps){
 		return ToStoryNode (id, parentText, entryPattern, text, steps, 0);
 	}
-
+		
 	static StoryNode ToStoryNode(int id, string parentText, string entryPattern, string text, StoryNodeData[] steps, int stepIndex){
 		StoryNode root = new StoryNode(id, parentText, entryPattern, text);
-		if (stepIndex + 1 < steps.Length) {
+		if (stepIndex < steps.Length) {
 			root.AddChild (ToStoryNode (id, text, steps [stepIndex].entryPattern, steps [stepIndex].text, steps, stepIndex + 1));
 		}
 		return root;

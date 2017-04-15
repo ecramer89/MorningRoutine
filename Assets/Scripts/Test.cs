@@ -180,9 +180,7 @@ public class Test : MonoBehaviour {
 	}*/
 
 
-	void TestMakeCoffee(){
 
 
-	}
 		
 }

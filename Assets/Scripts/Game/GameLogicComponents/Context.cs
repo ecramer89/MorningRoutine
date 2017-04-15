@@ -15,8 +15,7 @@ public class Context : MonoBehaviour {
 		AddStoryLines ();
 	}
 
-	//after creating a character, we should immediately build its dialogue tree.
-	//the domain will need to store the tree in memory to be able to validate communication attempts (walk down the tree)
+
 	private void CreateCharacters(){
 		string[] characterData = createCharacters.text.Split (new string[]{ System.Environment.NewLine }, System.StringSplitOptions.None);
 		for (int i = 1; i < characterData.Length; i++) {

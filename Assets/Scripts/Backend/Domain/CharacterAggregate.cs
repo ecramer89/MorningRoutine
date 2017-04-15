@@ -58,7 +58,11 @@ public class CharacterAggregate : Aggregate {
 		}
 
 		//todo field validations? entry pattern needs the @, steps must have even length, every second must be form of a regex
-
+		//i don't want the command to make it into storynode data.
+		//steps should be:
+		//length 2
+		//1: entry B text cat.
+		//2. entry C text chase
 		return new Event[] {
 			new AddStorylineAdded(command.characterId, command.storylineId, 
 				command.parent, command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
@@ -86,7 +90,7 @@ public class CharacterAggregate : Aggregate {
 		}
 		List<StoryNode> children = this.currentNode.GetChildren (command.input);
 		if (children == null) {
-			throw new ValidationException ("input", "No response for ${input}");
+			throw new ValidationException ("input", $"No response for {command.input}");
 		}
 		int random = RandomNumberGenerator.Instance.Range(0, children.Count);
 		StoryNode newNode = children [random];
@@ -124,6 +128,10 @@ public class CharacterAggregate : Aggregate {
 			parent = dialogueTree;
 		}
 
+		//hypothesis:it isn't converting all of the steps into storynodes.
+		//expect:
+		//steps:
+		//
 		StoryNode storyLine = StoryNode.ToStoryNode(evt.storylineId, parent.text, evt.entryPattern, evt.text, evt.steps);
 		parent.AddChild (storyLine);
 	}

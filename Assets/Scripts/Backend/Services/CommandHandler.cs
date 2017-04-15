@@ -19,6 +19,7 @@ public class CommandHandler : Service {
 
 	public static bool HandleCommand(Aggregate aggregate, int aggregateId, Command command){
 		string modelName = ModelNameGetter.GetModelName (aggregate.GetType());
+	
 		try {
 			Event[] results = aggregate.execute (command);
 
