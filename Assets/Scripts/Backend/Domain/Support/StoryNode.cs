@@ -47,15 +47,14 @@ public class StoryNode  {
     //BFS
 	//switch == to a case insensitive comparison.
 	public StoryNode FindParent(string parentText){
-		parentText = parentText.ToLower ();
-		if(parentText == this.text) return this;
+		if(Regex.Matches(this.text, parentText, RegexOptions.IgnoreCase).Count > 0) return this;
 		Queue<StoryNode> toVisit = new Queue<StoryNode> ();
 		foreach (StoryNode child in GetChildren()) {
 			toVisit.Enqueue (child);
 		}
 		while (toVisit.Count > 0) {
 			StoryNode next = toVisit.Dequeue ();
-			if (next.text.ToLower() == parentText) {
+			if (Regex.Matches(next.text, parentText, RegexOptions.IgnoreCase).Count > 0) {
 				return next;
 			}
 			foreach (StoryNode grandChild in next.GetChildren()) {
@@ -71,7 +70,7 @@ public class StoryNode  {
 	//return null if input doesn't match any regexes.
 	public List<StoryNode> GetChildren(string userInput){
 		foreach (string regex in children.Keys) {
-			if (Regex.Matches (userInput, regex).Count > 0)
+			if (Regex.Matches (userInput, regex, RegexOptions.IgnoreCase).Count > 0)
 				return children [regex];
 		}
 
