@@ -66,6 +66,8 @@
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\StorylineAdded.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StorylineCompleted.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StorylinePrizeAwarded.cs" />
      <Compile Include="Assets\Scripts\Backend\Exceptions\ValidationException.cs" />
      <Compile Include="Assets\Scripts\Backend\Initialize.cs" />
      <Compile Include="Assets\Scripts\Backend\ReadModels\CharacterReadModel.cs" />

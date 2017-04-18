@@ -20,6 +20,7 @@ characterID<storylineID<parent<entry<text<entry0<text0entry1<text1< ...entryn<te
 <\w*(projects|particular)\w*\?+
 <Well, yes. I've been working on sort of an interactive story... Mostly I wanted to build something that would enable me to create dynamic characters and worlds. it's sort of hard to explain.
 <\w*I\w*see it\w*\??
-<Haha, not yet.
+<Haha, well, I don't know when it'll be done...
+
 
 

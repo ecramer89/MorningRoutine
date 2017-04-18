@@ -21,7 +21,7 @@ public class StoryNode  {
 	public string entryPattern; //the input text that leads to this node from its parent
 	public string text; //the message that we display on the screen when we are at this step in the story
 	public Dictionary<string, List<StoryNode>> children; //the storynodes you can reach from this storynode.
-
+	public int prizeId;
 	 
 	public StoryNode(int id, string parent, string entry, string text, float requiredLevel = 0){
 		this.id = id;
@@ -73,6 +73,10 @@ public class StoryNode  {
 		}
 
 		return null;
+	}
+
+	public bool IsRoot(){
+		return children.Count == 0;
 	}
 
 	public List<StoryNode> GetChildren(){

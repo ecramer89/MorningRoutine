@@ -23,6 +23,12 @@ public class CharacterReducer : Reducer {
 			table.UpdateModel (dialogueAdvanced.characterId, character);
 			return;
 		}
+		if (type == typeof(StorylineCompleted)) {
+			StorylineCompleted storylineCompleted = (StorylineCompleted)evt;
+			CharacterReadModel character = (CharacterReadModel)table.GetModel (storylineCompleted.characterId);
+			character.currentText = "STUB: REPLACE WITH MORE MEANINGFUL TEXT";
+			table.UpdateModel (storylineCompleted.characterId, character);
+		}
 	}
 
 }

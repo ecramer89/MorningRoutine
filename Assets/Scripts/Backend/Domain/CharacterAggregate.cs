@@ -6,6 +6,7 @@ public class CharacterAggregate : Aggregate {
 
 	StoryNode dialogueTree; //the entire tree.
 	StoryNode currentNode; //a reference to the specific node in the dialogue tree that the player is currently on.
+	HashSet<int> completedStorylines;
 
 	public override Event[] execute(Command command){
 
@@ -37,6 +38,9 @@ public class CharacterAggregate : Aggregate {
 		}
 		if (evt.GetType () == typeof(DialogueAdvanced)) {
 			this.OnDialogueAdvanced ((DialogueAdvanced)evt);
+		}
+		if (evt.GetType () == typeof(StorylineCompleted)) {
+			this.OnStorylineCompleted ((StorylineCompleted)evt);
 		}
 	}
 
@@ -102,6 +106,18 @@ public class CharacterAggregate : Aggregate {
 		if (formattedInput.Length == 0) {
 			throw new ValidationException ("input", "Input can't be empty.");
 		}
+		if (this.currentNode.IsRoot ()) {
+			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterId, this.currentNode.id, command.playerId);
+			if (!this.completedStorylines.Contains (storylineCompleted.storylineId)) {
+				return new Event[]{
+					storylineCompleted,
+					new StorylinePrizeAwarded(command.playerId, command.characterId,  currentNode.prizeId)
+				};
+			}
+			return new Event[]{ 
+				storylineCompleted
+			};
+		}
 		List<StoryNode> children = this.currentNode.GetChildren (formattedInput);
 		if (children == null) {
 			throw new ValidationException ("input", $"No response for {command.input}");
@@ -124,6 +140,7 @@ public class CharacterAggregate : Aggregate {
 		string greeting = evt.greeting;
 		this.dialogueTree = new StoryNode (-1, null, @greeting, greeting);
 		this.currentNode = null;
+		this.completedStorylines = new HashSet<int> ();
 	}
 
 
@@ -155,7 +172,10 @@ public class CharacterAggregate : Aggregate {
 		parent.AddChild (storyLine);
 	}
 
-
+	private void OnStorylineCompleted(StorylineCompleted evt){
+		completedStorylines.Add (evt.storylineId);
+	}
+		
 	private void OnDialogueInitiated(DialogueInitiated evt){
 		this.currentNode = dialogueTree;
 	}
