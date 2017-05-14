@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour {
+public class Timed : MonoBehaviour {
 	public float runForSeconds;
 	public bool started = false;
 	public delegate void TimerDoneHandler();
-	public event TimerDoneHandler TimerDone;
+	public event TimerDoneHandler Done;
 
-	public void SetTimer(int runForSeconds){
+	public void Set(int runForSeconds){
 		this.runForSeconds = runForSeconds;
 	}
 
-	public void StartTimer(){
+	public void On(){
 		started = true;
 	}
 
@@ -22,7 +22,9 @@ public class Timer : MonoBehaviour {
 		if (started) {
 			runForSeconds -= Time.deltaTime;
 			if (runForSeconds < 0) {
-				TimerDone ();
+				started = false;
+				runForSeconds = 0;
+				Done ();
 			}
 		}
 	}
