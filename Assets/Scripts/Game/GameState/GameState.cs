@@ -78,6 +78,7 @@ public class MessageState{
 public class CharacterState{
 	public List<int> characters;
 	public int currentCharacter;
+
 	public CharacterState(List<int> characters){
 		this.characters = characters;
 		this.currentCharacter = Aggregate.NullId;
