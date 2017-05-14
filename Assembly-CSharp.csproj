@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\Backend\ServerResponses.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\AggregateRepository.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\CommandHandler.cs" />
+     <Compile Include="Assets\Scripts\Backend\Services\Constants.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\EventStore.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\GetModelName.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\IntegerGUIDCreator.cs" />

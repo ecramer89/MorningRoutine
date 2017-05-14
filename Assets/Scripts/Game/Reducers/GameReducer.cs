@@ -37,6 +37,10 @@ public class GameReducer  {
 			state.SetCharacter (((CharacterReadModel)eventData).Id);
 			break;
 
+		case ActionTypes.CURRENT_STORYLINE_COMPLETED:
+			state.SetCharacter (Constants.NULL_ID);
+			break;
+
 		}
 	}
 

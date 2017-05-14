@@ -12,6 +12,7 @@ public class CharacterReducer : Reducer {
 			DialogueInitiated dialogueInitiated = (DialogueInitiated)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (dialogueInitiated.characterId);
 			character.currentText = character.greeting;
+			character.currentStorylineCompleted = false;
 			table.UpdateModel (dialogueInitiated.characterId, character); //not necessary, since we are mutating the reference,
 			//but like to be explicit and will soon move to immutable structs for readmodels.
 			return;
@@ -26,7 +27,8 @@ public class CharacterReducer : Reducer {
 		if (type == typeof(StorylineCompleted)) {
 			StorylineCompleted storylineCompleted = (StorylineCompleted)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (storylineCompleted.characterId);
-			character.currentText = "STUB: REPLACE WITH MORE MEANINGFUL TEXT";
+			character.currentText = character.goodbye;
+			character.currentStorylineCompleted = true;
 			table.UpdateModel (storylineCompleted.characterId, character);
 		}
 	}

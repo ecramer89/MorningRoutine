@@ -7,12 +7,16 @@ public class CharacterReadModel : ReadModel {
 
 	public string name;
 	public string greeting;
+	public string goodbye;
 	public string currentText;
+	public bool currentStorylineCompleted;
 
 
 	public CharacterReadModel(int id, string name, string greeting) : base(id){
 		this.name = name;
 		this.greeting = greeting;
 		this.currentText = "";
+		goodbye = "Goodbye";
+		currentStorylineCompleted = false;
 	}
 }

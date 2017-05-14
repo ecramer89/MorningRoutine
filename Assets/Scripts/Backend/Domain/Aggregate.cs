@@ -1,6 +1,6 @@
 ﻿public abstract class Aggregate  {
 
-	static int nullId = -1;
+	static int nullId = Constants.NULL_ID;
 	public static int NullId{
 		get { 
 			return nullId;

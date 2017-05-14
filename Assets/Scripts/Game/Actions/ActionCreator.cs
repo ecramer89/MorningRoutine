@@ -4,7 +4,8 @@ public enum ActionTypes {
 	NEW_GAME_BEGUN, 
 	MESSAGE_SET, 
 	CHARACTER_CREATED,
-	CHARACTER_SET
+	CHARACTER_SET,
+	CURRENT_STORYLINE_COMPLETED
 };
 
 public class ActionCreator : MonoBehaviour  {
@@ -69,6 +70,9 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ($"Success: Advanced dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateId);
 			GameReducer.Reduce (ActionTypes.MESSAGE_SET, character.currentText);
+			if (character.currentStorylineCompleted == true) {
+				GameReducer.Reduce (ActionTypes.CURRENT_STORYLINE_COMPLETED, "");
+			}
 		} else
 			Debug.Log ("Failed");
 	}
