@@ -1,26 +1,48 @@
-characterID<storylineID<parent<entry<text<entry0<text0entry1<text1< ...entryn<textn
-%0
-<0
-< 
-<\w*how are you\w*\?+
-<I'm okay.
-<\w*work\w*\?+
-<Work is alright. We're hiring some new people.
-<\w*((you)?(like|feel about)them\?)|they(\w{3}\w*)\?+
-<They're okay. One of them is a woman.
-<why\w*(matter|difference|relevant)\w*\?+
-<I used to be the only girl.
-%0
-<1
+characterName<intro<playerResponse<characterResponse<events
+<kaz
+<Who are you?
+<{player{name}}
+<Hmf. I suppose the girl let you in.
+<PlayerMet(kaz)
+<kaz
+<Hmf. I suppose the girl let you in.
+<girl|who
+<Tall girl, shaggy brown hair. She has a sadistic streak so count yourself lucky if you avoided interacting with her.
+<PlayerLearnedAbout(girl)
+<kaz
+<Tall girl, shaggy brown hair. She has a sadistic streak so count yourself lucky if you avoided interacting with her.
+<sadistic|(what do you mean)|how|why
+<Well, she locks us up in this house, for one thing. I don't care as much for myself- I've seen enough of the outdoors. I feel sorry for my newphew though.
 <
-<\w*(hi|hello|greetings|salutations|i come in peace)\w* 
-<It's nice to meet you.
-<\w*what\w*(you\w*(like|love|into))|(hobbies|activities)\w*\?+\w*
-<I like programming. It's my job now. I do it in my spare time, too. 
-<\w*(projects|particular)\w*\?+
-<Well, yes. I've been working on sort of an interactive story... Mostly I wanted to build something that would enable me to create dynamic characters and worlds. it's sort of hard to explain.
-<\w*I\w*see it\w*\??
-<Haha, well, I don't know when it'll be done...
-
-
-
+<kaz
+<Well, she locks us up in this house, for one thing. I don't care as much for myself- I've seen enough of the outdoors. I feel sorry for my newphew though.
+<newphew-outdoors-(how old are you/?)
+<His name is Pip. He's just a kitten.|Just the garden. Sometimes I and my friend would make our way to a park a little ways away though.|That's none of your business.
+<
+<kaz
+<His name is Pip. He's just a kitten.
+<trouble|bother|mischief-love|like-uncle|relation|family
+<Pip's very curious. He takes after his mother that way. He's not at all like me.|Pip's family, so there isn't much choice, is there?
+<PlayerLearnedAbout(pip)
+<kaz
+<Just the garden. Sometimes I and my friend would make our way to a park a little ways away though.
+<friend-see|do-bird|rat|mouse
+<My friend Riddle, whom I've known for some time. He's a large tuxedo cat.|I mostly slept. Riddle-my friend- like to hunt.|Riddle liked hunting. I joined occasionally but I was never very good.
+<kaz
+<That's none of your business.
+<PlayerOffended(kaz)
+<kaz
+<My friend Riddle, whom I've known for some time. He's a large tuxedo cat.
+<*
+<NOT WRITTEN YET
+<
+<kaz
+<I mostly slept. Riddle-my friend- like to hunt.
+<*
+<NOT WRITTEN YET
+<
+<kaz
+<Riddle liked hunting. I joined occasionally but I was never very good.
+<*
+<NOT WRITTEN YET
+<

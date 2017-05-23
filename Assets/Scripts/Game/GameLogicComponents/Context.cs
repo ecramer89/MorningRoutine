@@ -36,18 +36,18 @@ public class Context : MonoBehaviour {
 		string[] storyLineData = storyLines.text.Split(storyLineDelimiterChar, System.StringSplitOptions.None);
 		for (int i = 1; i<storyLineData.Length; i++) {
 			string[] fieldValues = storyLineData[i].Split (fieldDelimiterChar, System.StringSplitOptions.None);
-			if (fieldValues.Length >= 5) {
+			if (fieldValues.Length >= 5) {//parsing multiple steps
 				try{
 					int characterId = Int32.Parse(fieldValues[0]);
 					int storyLineId = Int32.Parse(fieldValues[1]);
-					string parentText = fieldValues[2].Trim();
-					string entryPattern = fieldValues[3].Trim();
-					string text = fieldValues[4].Trim();
+					string introductoryText = fieldValues[2].Trim();
+					string playerResponses = fieldValues[3].Trim();
+					string characterResponses = fieldValues[4].Trim();
 					string[] steps = new string[fieldValues.Length - 5];
 					for(int j=5;j<fieldValues.Length;j++){
 						steps[j-5]=fieldValues[j];
 					}
-					ActionCreator.Instance.AddStoryLine(characterId, storyLineId, parentText, entryPattern, text, steps);
+					ActionCreator.Instance.AddStoryLine(characterId, storyLineId, introductoryText, playerResponses, characterResponses, steps);
 
 				}
 				catch(Exception e){

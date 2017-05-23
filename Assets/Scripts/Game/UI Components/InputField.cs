@@ -10,6 +10,7 @@ public class InputField : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameObject.SetActive (false);
+
 		inputField = gameObject.GetComponent<UnityEngine.UI.InputField> ();
 		GameState.Instance.messageSet += () => {
 			gameObject.SetActive (true);
