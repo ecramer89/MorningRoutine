@@ -1,14 +1,14 @@
 ﻿
 
 public abstract class ReadModel {
-	protected int id;
-	public int Id{
+	protected string id;
+	public string Id{
 		get{
 			return id;
 		}
 	}
 
-	public ReadModel(int id){
+	public ReadModel(string id){
 		this.id = id;
 	}
 }

@@ -31,7 +31,7 @@ public class AggregateRepository : Service {
 
 	}
 
-	public static Aggregate GetOrCreate(Type aggregateType, int aggregateId){
+	public static Aggregate GetOrCreate(Type aggregateType, string aggregateId){
 		string modelName = ModelNameGetter.GetModelName (aggregateType);
 		Aggregate aggregate;
 		AggregateTable table = GetTable (modelName);
@@ -50,17 +50,17 @@ public class AggregateRepository : Service {
 
 public class AggregateTable{
 
-	Dictionary<int, Aggregate> entries;
+	Dictionary<string, Aggregate> entries;
 
 	public AggregateTable(){
-		entries = new Dictionary<int, Aggregate> ();
+		entries = new Dictionary<string, Aggregate> ();
 	}
 
-	public void InsertAggregate(int aggregateId, Aggregate initialValue){
+	public void InsertAggregate(string aggregateId, Aggregate initialValue){
 		entries.Add (aggregateId, initialValue);
 	}
 
-	public Aggregate GetAggregate(int aggregateId){
+	public Aggregate GetAggregate(string aggregateId){
 		Aggregate aggregate;
 		if (entries.TryGetValue (aggregateId, out aggregate)) {
 			return aggregate;

@@ -1,13 +1,13 @@
 ﻿public abstract class Aggregate  {
 
-	static int nullId = Constants.NULL_ID;
-	public static int NullId{
+	static string nullId = Constants.NULL_ID;
+	public static string NullId{
 		get { 
 			return nullId;
 		}
 	}
 
-	protected int id;
+	protected string id;
 
 	public Aggregate(){
 		this.id = Aggregate.NullId;

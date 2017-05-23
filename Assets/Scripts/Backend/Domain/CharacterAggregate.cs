@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 public class CharacterAggregate : Aggregate {
 
 	StoryNode dialogueTree; //the entire tree.
 	StoryNode currentNode; //a reference to the specific node in the dialogue tree that the player is currently on.
-	HashSet<int> completedStorylines;
+	HashSet<string> completedStorylineIds;
 
 	public override Event[] execute(Command command){
 
@@ -51,7 +51,7 @@ public class CharacterAggregate : Aggregate {
 		}
 	
 		return new Event[] {
-			new CharacterCreated(command.characterId, command.name, command.greeting)
+			new CharacterCreated(command.name, command.greeting)
 		};
 
 	}
@@ -60,26 +60,27 @@ public class CharacterAggregate : Aggregate {
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
 		}
-		if (command.steps.Length % 2 != 0) {
-			throw new ValidationException ("steps", "Each step requires an entry pattern and a message (length of array should be even- check the text file. Are you missing a field?)");
+		if (command.playerResponses.Length != command.characterResponses.Length) {
+			throw new ValidationException ("responses", "Each possible player response must match to one charaterResponse. Did you forget to define one in the text file?");
 		}
-		if (command.entryPattern.Length == 0) {
-			throw new ValidationException ("entryPattern", "Entry pattern can't be empty.");
+		if (command.introductoryText.Length == 0) {
+			throw new ValidationException ("introductoryText", "introductory text can't be empty.");
 		}
-		if (command.text.Length == 0) {
-			throw new ValidationException ("text", "Text can't be empty.");
-		}
-		for(int i=0;i<command.steps.Length; i++){
-			string stepString = command.steps [i];
-			if (stepString.Length == 0) {
-				string stepField = "step-" + ((i % 2 == 0) ? "entryPattern" : "text");
-				throw new ValidationException (stepField, $"{stepField} can't be empty; check the values for {(i/2)+1}th step");
+
+		for(int i=0;i<command.playerResponses.Length; i++){
+			string playerResponse = command.playerResponses [i];
+			string characterResponse = command.characterResponses [i];
+			if (playerResponse.Length == 0 || characterResponse.Length == 0) {
+				throw new ValidationException ("response", $"Response can't be empty; check the values for response {i+1}");
 			}
 		}
-			
+
+		string[] playerResponses = ConvertPlayerResponsesToRegexes (command.playerResponses);
+
+	
 		return new Event[] {
-			new AddStorylineAdded(command.characterId, command.storylineId, 
-				command.parent, @command.entryPattern, command.steps, command.text, command.requiredLevel, command.completeFirst)
+			new AddStorylineAdded(command.characterName, command.storylineId, 
+				command.introductoryText,playerResponses, command.characterResponses)
 		};
 	}
 
@@ -90,7 +91,7 @@ public class CharacterAggregate : Aggregate {
 
 
 		return new Event[] {
-			new DialogueInitiated(command.characterId, command.playerId)
+			new DialogueInitiated(command.characterName, command.playerId)
 		};
 
 	}
@@ -107,11 +108,11 @@ public class CharacterAggregate : Aggregate {
 			throw new ValidationException ("input", "Input can't be empty.");
 		}
 		if (this.currentNode.IsRoot ()) {
-			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterId, this.currentNode.id, command.playerId);
-			if (!this.completedStorylines.Contains (storylineCompleted.storylineId)) {
+			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterName, this.currentNode.id, command.playerId);
+			if (!this.completedStorylineIds.Contains (storylineCompleted.storylineId)) {
 				return new Event[]{
 					storylineCompleted,
-					new StorylinePrizeAwarded(command.playerId, command.characterId,  currentNode.prizeId)
+					new StorylinePrizeAwarded(command.playerId, command.characterName,  currentNode.prizeId)
 				};
 			}
 			return new Event[]{ 
@@ -128,7 +129,7 @@ public class CharacterAggregate : Aggregate {
 		return new Event[]{
 			new DialogueAdvanced
 			(
-				command.characterId, command.playerId, 
+				command.characterName, command.playerId, 
 				command.input, newNode
 			)
 		};
@@ -136,44 +137,45 @@ public class CharacterAggregate : Aggregate {
 
 
 	private void OnCharacterCreated(CharacterCreated evt){
-		this.id = evt.characterId;
+		this.id = evt.name;
 		string greeting = evt.greeting;
-		this.dialogueTree = new StoryNode (-1, null, @greeting, greeting);
+		this.dialogueTree = new StoryNode (Constants.NULL_ID, greeting);
 		this.currentNode = null;
-		this.completedStorylines = new HashSet<int> ();
+		this.completedStorylineIds = new HashSet<string> ();
 	}
 
 
 	private void OnStoryLineAdded(AddStorylineAdded evt){
 		
-		StoryNode parent; 
-		if (evt.parent == null || evt.parent.Length == 0) {
-			parent = dialogueTree;
+		StoryNode introductoryTextNode; 
+		if (evt.introductoryText == null || evt.introductoryText.Length == 0) {
+			introductoryTextNode = dialogueTree;
 		} else {
 			//search through dialogue tree until parent is found
-			parent = dialogueTree.FindParent(evt.parent);
+			//when we create 
+			introductoryTextNode = dialogueTree.FindParent(evt.introductoryText);
 		}
 
 		//parent not found in the dialogue tree. presume that parent is the root.
-		if (parent == null) {
-			parent = dialogueTree;
+		if (introductoryTextNode == null) {
+			introductoryTextNode = dialogueTree;
 		}
+			
+		for (int i=0;i<evt.playerResponses.Length;i++) {
+			string allowedPlayerResponse = evt.playerResponses [i];
+			string characterResponse = evt.characterResponses [i];
+			//TODO shouldn't it check to see if there is already an existing node matching the given charcter response?
+			//instead of making a new one. because if there is, we should add it as a child of this node. (make a densely interconnected graph)
 
-		StoryNodeData[] steps = new StoryNodeData[(evt.steps.Length)/2];
-		for (int j = 0, i=0; j < evt.steps.Length - 1; j += 2, i++) {
-			string stepEntryPattern = FormatEntryRegex(evt.steps [j]);
-			string stepText = evt.steps [j + 1];
-			StoryNodeData storyNodeData = new StoryNodeData (stepText, stepEntryPattern);
-			steps [i] = storyNodeData;
+			StoryNode node = dialogueTree.FindParent (characterResponse);
+			if(node == null) node = new StoryNode(evt.storylineId, characterResponse);
+			//add child should then accept the entry pattern as one argument and the node as the other.
+			introductoryTextNode.AddChild (allowedPlayerResponse,node);
 		}
-
-		StoryNode storyLine = StoryNode.ToStoryNode(evt.storylineId, parent.text, evt.entryPattern, evt.text, steps);
-
-		parent.AddChild (storyLine);
 	}
 
 	private void OnStorylineCompleted(StorylineCompleted evt){
-		completedStorylines.Add (evt.storylineId);
+		completedStorylineIds.Add (evt.storylineId);
 	}
 		
 	private void OnDialogueInitiated(DialogueInitiated evt){
@@ -187,9 +189,10 @@ public class CharacterAggregate : Aggregate {
 	private string FormatUserInput(string userInput){
 		return userInput.Trim ().ToLower ().Replace (" ", "");
 	}
+		
 
-	private string FormatEntryRegex(string regexString){
-		return @regexString;
+	private string[] ConvertPlayerResponsesToRegexes(string[] playerResponses){
+		return playerResponses.Select (response => @"\\w*" +$"{response}\\w*").ToArray();
 	}
 
 

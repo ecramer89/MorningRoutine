@@ -1,26 +1,19 @@
 ﻿
 
 public class AddStoryline : Command {
-	public int characterId;
-	public int storylineId;
-	public string parent;
-	public string entryPattern; //must have syntax of regular expression pattern. e.g. @"\d+"
-	public string[] steps;
-	public float requiredLevel;
-	public int[] completeFirst;
-	public string text;
+	public string characterName;
+	public string storylineId;
+	public string introductoryText;
+	public string[] playerResponses; //must have syntax of regular expression pattern. e.g. @"\d+"
+	public string[] characterResponses;
 
-	public AddStoryline(int characterId, int storylineId, string parent, 
-		string entryPattern, string[] steps, string text, float requiredLevel = 0, 
-		int[] completeFirst= null){
-		this.characterId = characterId;
+	public AddStoryline(string characterName, string storylineId, string introductoryText, 
+		string[] playerResponses, string[] characterResponses){
+		this.characterName = characterName;
 		this.storylineId = storylineId;
-		this.parent = parent;
-		this.entryPattern = entryPattern;
-		this.steps = steps;
-		this.requiredLevel = requiredLevel;
-		this.completeFirst = completeFirst;
-		this.text = text;
+		this.introductoryText = introductoryText;
+		this.playerResponses = playerResponses;
+		this.characterResponses = characterResponses;
 	}
 
 }

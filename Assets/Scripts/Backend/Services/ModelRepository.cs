@@ -30,7 +30,7 @@ public class ModelRepository : Service  {
 
 	}
 
-	public static ReadModel Get(string modelName, int aggregateId){
+	public static ReadModel Get(string modelName, string aggregateId){
 		return GetTable (modelName).GetModel (aggregateId);
 	}
 		
@@ -38,21 +38,21 @@ public class ModelRepository : Service  {
 
 public class ModelTable{
 
-	Dictionary<int, ReadModel> entries;
+	Dictionary<string, ReadModel> entries;
 
 	public ModelTable(){
-		entries = new Dictionary<int, ReadModel> ();
+		entries = new Dictionary<string, ReadModel> ();
 	}
 
-	public void InsertModel(int aggregateId, ReadModel initialValue){
+	public void InsertModel(string aggregateId, ReadModel initialValue){
 	    entries.Add (aggregateId, initialValue);
 	}
 
-	public void UpdateModel(int aggregateId, ReadModel update){
+	public void UpdateModel(string aggregateId, ReadModel update){
 		entries [aggregateId] = update;
 	}
 
-	public ReadModel GetModel(int aggregateId){
+	public ReadModel GetModel(string aggregateId){
 		ReadModel model;
 		if (entries.TryGetValue (aggregateId, out model)) {
 			return model;

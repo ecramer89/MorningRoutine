@@ -1,12 +1,10 @@
 ﻿using System;
 
 public class CharacterCreated : Event {
-	public int characterId;
 	public string name;
 	public string greeting;
 
-	public CharacterCreated(int id, string name, string greeting){
-		this.characterId = id;
+	public CharacterCreated(string name, string greeting){
 		this.name = name;
 		this.greeting = greeting;
 	}

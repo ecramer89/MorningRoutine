@@ -12,7 +12,7 @@ public class CharacterReadModel : ReadModel {
 	public bool currentStorylineCompleted;
 
 
-	public CharacterReadModel(int id, string name, string greeting) : base(id){
+	public CharacterReadModel(string name, string greeting) : base(name){
 		this.name = name;
 		this.greeting = greeting;
 		this.currentText = "";

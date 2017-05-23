@@ -1,11 +1,11 @@
 ﻿
 
 public class StorylineCompleted : Event {
-	public int characterId;
-	public int storylineId;
-	public int playerId;
-	public StorylineCompleted(int characterId, int storylineId, int playerId){
-		this.characterId = characterId;
+	public string characterName;
+	public string storylineId;
+	public string playerId;
+	public StorylineCompleted(string characterName, string storylineId, string playerId){
+		this.characterName = characterName;
 		this.storylineId = storylineId;
 		this.playerId = playerId;
 	}

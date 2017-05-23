@@ -32,7 +32,6 @@ public class PlayerAggregate : Aggregate {
 	}
 
 
-
 	private void OnNewGameBegun(NewGameBegun evt){
 		this.id = evt.playerId;
 	}

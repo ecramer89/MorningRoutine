@@ -1,12 +1,12 @@
 ﻿
 
 public class AdvanceDialogue : Command {
-	public int characterId;
-	public int playerId;
+	public string characterName;
+	public string playerId;
 	public string input;
 
-	public AdvanceDialogue(int characterId, int playerId, string input){
-		this.characterId = characterId;
+	public AdvanceDialogue(string characterName, string playerId, string input){
+		this.characterName = characterName;
 		this.playerId = playerId;
 		this.input = input;
 	}

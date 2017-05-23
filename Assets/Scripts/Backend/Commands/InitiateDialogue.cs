@@ -1,11 +1,11 @@
 ﻿
 
 public class InitiateDialogue : Command {
-	public int characterId;
-	public int playerId;
+	public string characterName;
+	public string playerId;
 
-	public InitiateDialogue(int characterId, int playerId){
-		this.characterId = characterId;
+	public InitiateDialogue(string characterName, string playerId){
+		this.characterName = characterName;
 		this.playerId = playerId;
 	}
 }

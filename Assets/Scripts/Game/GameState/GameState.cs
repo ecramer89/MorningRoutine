@@ -42,31 +42,31 @@ public class GameState {
 	}
 
 
-	CharacterState characterState = new CharacterState (new List<int>());
-	public delegate void CharacterStateHandler(int id);
-	public event CharacterStateHandler characterAdded = (characterId)=>{};
-	public event CharacterStateHandler characterSet = (characterId)=>{};
+	CharacterState characterState = new CharacterState (new List<string>());
+	public delegate void CharacterStateHandler(string characterName);
+	public event CharacterStateHandler characterAdded = (characterName)=>{};
+	public event CharacterStateHandler characterSet = (characterName)=>{};
 	public CharacterState CharacterState{
 		get {
 			return characterState;
 		}
 	}
 
-	public void AddCharacter(int characterId){
-		CharacterState.characters.Add (characterId);
-		characterAdded (characterId);
+	public void AddCharacter(string characterName){
+		CharacterState.characters.Add (characterName);
+		characterAdded (characterName);
 	}
 
-	public void SetCharacter(int characterId){
-		CharacterState.currentCharacter = characterId;
-		characterSet (characterId);
+	public void SetCharacter(string characterName){
+		CharacterState.currentCharacterName = characterName;
+		characterSet (characterName);
 	}
 }
 
 
 //state classes.
 public class PlayerState{
-	public int id; 
+	public string id; 
 	public string name;
 
 }
@@ -76,11 +76,11 @@ public class MessageState{
 }
 	
 public class CharacterState{
-	public List<int> characters;
-	public int currentCharacter;
+	public List<string> characters;
+	public string currentCharacterName;
 
-	public CharacterState(List<int> characters){
+	public CharacterState(List<string> characters){
 		this.characters = characters;
-		this.currentCharacter = Aggregate.NullId;
+		this.currentCharacterName = Aggregate.NullId;
 	}
 }

@@ -1,2 +1,2 @@
-id<<name<<greeting<<goodbye
-0<Emily<Hello<Goodbye
+name<<greeting<<goodbye
+kaz<Hello<Goodbye

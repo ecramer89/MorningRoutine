@@ -2,37 +2,36 @@
 
 public class CharacterController {
 	
-	public static ServerResponse CreateCharacter(int characterId, string characterName, string characterGreeting){
-		Command command = new CreateCharacter (characterId, characterName, characterGreeting);
-		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
-		bool success = CommandHandler.HandleCommand(character, characterId, command);
-		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+	public static ServerResponse CreateCharacter(string characterName, string characterGreeting){
+		Command command = new CreateCharacter (characterName, characterGreeting);
+		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterName);
+		bool success = CommandHandler.HandleCommand(character, characterName, command);
+		ServerResponse response = new ServerResponse (characterName, ModelNameGetter.GetModelName(character.GetType()), !success);
 		return response;
 	}
 
-	public static ServerResponse AddStoryLine(int characterId, int storyLineId, string parentText, string entryPattern, string text,
-		string[] steps){
-		Command command = new AddStoryline (characterId, storyLineId, parentText, entryPattern, steps, text);
-		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
-		bool success = CommandHandler.HandleCommand(character, characterId, command);
-		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+	public static ServerResponse AddStoryLine(string characterName, string storyLineId, string introductoryText, string[] playerResponses, string[] characterResponses){
+		Command command = new AddStoryline (characterName, storyLineId, introductoryText, playerResponses, characterResponses);
+		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterName);
+		bool success = CommandHandler.HandleCommand(character, characterName, command);
+		ServerResponse response = new ServerResponse (characterName, ModelNameGetter.GetModelName(character.GetType()), !success);
 		return response;
 
 	}
 
-	public static ServerResponse InitiateDialogue(int characterId, int playerId){
-		Command command = new InitiateDialogue (characterId, playerId);
-		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
-		bool success = CommandHandler.HandleCommand(character, characterId, command);
-		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+	public static ServerResponse InitiateDialogue(string characterName, string playerId){
+		Command command = new InitiateDialogue (characterName, playerId);
+		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterName);
+		bool success = CommandHandler.HandleCommand(character, characterName, command);
+		ServerResponse response = new ServerResponse (characterName, ModelNameGetter.GetModelName(character.GetType()), !success);
 		return response;
 	}
 
-	public static ServerResponse AdvanceDialogue (int characterId, int playerId, string input){
-		Command command = new AdvanceDialogue (characterId, playerId, input);
-		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterId);
-		bool success = CommandHandler.HandleCommand(character, characterId, command);
-		ServerResponse response = new ServerResponse (characterId, ModelNameGetter.GetModelName(character.GetType()), !success);
+	public static ServerResponse AdvanceDialogue (string characterName, string playerId, string input){
+		Command command = new AdvanceDialogue (characterName, playerId, input);
+		Aggregate character = AggregateRepository.GetOrCreate (typeof(CharacterAggregate), characterName);
+		bool success = CommandHandler.HandleCommand(character, characterName, command);
+		ServerResponse response = new ServerResponse (characterName, ModelNameGetter.GetModelName(character.GetType()), !success);
 		return response;
 	}
 

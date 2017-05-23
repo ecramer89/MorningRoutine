@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public struct ServerResponse {
 	public bool error;
-	public int aggregateId;
+	public string aggregateIdentifier;
 	public string modelName;
 
-	public ServerResponse(int aggregateId, string modelName, bool error){
-		this.aggregateId = aggregateId;
+	public ServerResponse(string aggregateIdentifier, string modelName, bool error){
+		this.aggregateIdentifier = aggregateIdentifier;
 		this.modelName = modelName;
 		this.error = error;
 	}

@@ -1,13 +1,13 @@
 ﻿
 
 public class DialogueAdvanced : Event {
-		public int characterId;
-		public int playerId;
+		public string characterName;
+		public string playerId;
 	    public string input;
 	    public StoryNode newNode;
 
-	public DialogueAdvanced(int characterId, int playerId, string input, StoryNode newNode){
-			this.characterId = characterId;
+	public DialogueAdvanced(string characterName, string playerId, string input, StoryNode newNode){
+			this.characterName = characterName;
 			this.playerId = playerId;
 			this.input = input;
 		    this.newNode = newNode;

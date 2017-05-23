@@ -1,9 +1,9 @@
 ﻿public class DialogueInitiated : Event {
-	public int characterId;
-	public int playerId;
+	public string characterName;
+	public string playerId;
 
-	public DialogueInitiated(int characterId, int playerId){
-		this.characterId = characterId;
+	public DialogueInitiated(string characterName, string playerId){
+		this.characterName = characterName;
 		this.playerId = playerId;
 	}
 }

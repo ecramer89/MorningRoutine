@@ -17,7 +17,7 @@ public class CommandHandler : Service {
 	}
 
 
-	public static bool HandleCommand(Aggregate aggregate, int aggregateId, Command command){
+	public static bool HandleCommand(Aggregate aggregate, string aggregateId, Command command){
 		string modelName = ModelNameGetter.GetModelName (aggregate.GetType());
 	
 		try {

@@ -22,10 +22,10 @@ using System.Reflection;
 //and then update the game state (we don't necessarily want the UI events to play through each time we estart the game though, so need some means of)
 public class EventStore : Service {
 
-	static Dictionary<string, Dictionary<int, LinkedList<Event>>> data;
+	static Dictionary<string, Dictionary<string, LinkedList<Event>>> data;
 
 	public override void Initialize(){
-		data = new Dictionary<string, Dictionary<int, LinkedList<Event>>> ();
+		data = new Dictionary<string, Dictionary<string, LinkedList<Event>>> ();
 		Assembly assembly = Assembly.GetExecutingAssembly ();
 		foreach (Type type in assembly.GetTypes()) {
 			if (type.BaseType == typeof(ReadModel)) {
@@ -35,18 +35,18 @@ public class EventStore : Service {
 	}
 
 	public static void CreateStreamsFor(string modelName){
-		data.Add (modelName, new Dictionary<int, LinkedList<Event>> ());
+		data.Add (modelName, new Dictionary<string, LinkedList<Event>> ());
 	}
 
-	public static LinkedList<Event> CreateStreamFor(Dictionary<int, LinkedList<Event>> modelStreams, int aggregateId){
+	public static LinkedList<Event> CreateStreamFor(Dictionary<string, LinkedList<Event>> modelStreams, string aggregateId){
 		LinkedList<Event> newStream = new LinkedList<Event> ();
 		modelStreams.Add (aggregateId, newStream);
 		return newStream;
 	}
 
 
-	public static LinkedList<Event> GetAllEventsFor(string aggregateType, int aggregateId){
-		Dictionary<int, LinkedList<Event>> eventTable;
+	public static LinkedList<Event> GetAllEventsFor(string aggregateType, string aggregateId){
+		Dictionary<string, LinkedList<Event>> eventTable;
 		if (data.TryGetValue (aggregateType, out eventTable)) {
 			LinkedList<Event> events;
 			if (eventTable.TryGetValue (aggregateId, out events)) {
@@ -56,8 +56,8 @@ public class EventStore : Service {
 		return new LinkedList<Event>();
 	}
 
-	public static void AppendAllEventsFor (string aggregateType, int aggregateId, Event[] newEvents){
-		Dictionary<int, LinkedList<Event>> eventStream;
+	public static void AppendAllEventsFor (string aggregateType, string aggregateId, Event[] newEvents){
+		Dictionary<string, LinkedList<Event>> eventStream;
 		if (data.TryGetValue (aggregateType, out eventStream)) {
 			LinkedList<Event> events;
 

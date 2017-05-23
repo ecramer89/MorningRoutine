@@ -2,39 +2,24 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public struct StoryNodeData {
-	public string text;
-	public string entryPattern;
-	public StoryNodeData(string text, string entryPattern){
-		this.text=text;
-		this.entryPattern = entryPattern;
-	}
-}
-
 public class StoryNode  {
-	public int id;
-	public string parent; //the message of the storynode that would lead to this storynode.
+	public string id;
+	public string text; //the text that is displayed for this story node.
 	public float requiredLevel; //the required degree of familiarity (floating point between 0 and 1) the player needs to have with this character to be ableto explore this story)
 	//(node, given player read moel adictionary of character id to degree of familiarity)
-	public HashSet<int> completeFirst; //ids of storylines that the player needs to have completed (nb put this data in player read model,
-	//pass into the "advance story" command) in order to visit this story. defaults to empty.
-	public string entryPattern; //the input text that leads to this node from its parent
-	public string text; //the message that we display on the screen when we are at this step in the story
+	public string allowedPlayerResponse; //the input text that leads to this node from its parent
 	public Dictionary<string, List<StoryNode>> children; //the storynodes you can reach from this storynode.
 	public int prizeId;
 	 
-	public StoryNode(int id, string parent, string entry, string text, float requiredLevel = 0){
+	public StoryNode(string id, string text, string allowedPlayerResponse=""){
 		this.id = id;
-		this.parent = parent;
-		this.entryPattern = entry;
 		this.text = text;
-		this.requiredLevel = requiredLevel;
-		this.completeFirst = new HashSet<int> ();
+		this.allowedPlayerResponse = allowedPlayerResponse;
 		this.children = new Dictionary<string, List<StoryNode>> ();
 	}
 
-	public void AddChild(StoryNode child){
-		string entryPattern = child.entryPattern;
+	public void AddChild(string playerResponseLeadingToNode, StoryNode child){
+		string entryPattern = playerResponseLeadingToNode;
 		List<StoryNode> others;
 		if (children.TryGetValue (entryPattern, out others)) {
 			others.Add (child);
@@ -45,15 +30,15 @@ public class StoryNode  {
 	}
 
 	//BFS; find the shallowest node whose text matches that of the specified parent text.
-	public StoryNode FindParent(string parentText){
-		if(Regex.Matches(this.text, parentText, RegexOptions.IgnoreCase).Count > 0) return this;
+	public StoryNode FindParent(string text){
+		if(Regex.Matches(this.text, text, RegexOptions.IgnoreCase).Count > 0) return this;
 		Queue<StoryNode> toVisit = new Queue<StoryNode> ();
 		foreach (StoryNode child in GetChildren()) {
 			toVisit.Enqueue (child);
 		}
 		while (toVisit.Count > 0) {
 			StoryNode next = toVisit.Dequeue ();
-			if (Regex.Matches(next.text, parentText, RegexOptions.IgnoreCase).Count > 0) {
+			if (Regex.Matches(next.text, text, RegexOptions.IgnoreCase).Count > 0) {
 				return next;
 			}
 			foreach (StoryNode grandChild in next.GetChildren()) {
@@ -88,23 +73,11 @@ public class StoryNode  {
 		}
 		return result;
 	}
-
-	public void AddCompleteFirst(int storyLineId){
-		completeFirst.Add (storyLineId);
-	}
-
-	//e.g., length =2 
-	public static StoryNode ToStoryNode(int id, string parentText, string entryPattern, string text, StoryNodeData[] steps){
-		return ToStoryNode (id, parentText, entryPattern, text, steps, 0);
+		
+	public static StoryNode ToStoryNode(string id, string introductoryText, string allowedPlayerResponse){
+		return new StoryNode(id, introductoryText, allowedPlayerResponse);
 	}
 		
-	static StoryNode ToStoryNode(int id, string parentText, string entryPattern, string text, StoryNodeData[] steps, int stepIndex){
-		StoryNode root = new StoryNode(id, parentText, entryPattern, text);
-		if (stepIndex < steps.Length) {
-			root.AddChild (ToStoryNode (id, text, steps [stepIndex].entryPattern, steps [stepIndex].text, steps, stepIndex + 1));
-		}
-		return root;
-	}
 
 
 }

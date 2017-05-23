@@ -1,12 +1,12 @@
 ﻿
 public class StorylinePrizeAwarded : Event {
-	public int playerId;
-	public int characterId;
+	public string playerId;
+	public string characterName;
 	public int prizeId;
 
-	public StorylinePrizeAwarded(int playerId, int characterId, int prizeId){
+	public StorylinePrizeAwarded(string playerId, string characterName, int prizeId){
 		this.playerId = playerId;
-		this.characterId = characterId;
+		this.characterName = characterName;
 		this.prizeId = prizeId;
 
 	}
