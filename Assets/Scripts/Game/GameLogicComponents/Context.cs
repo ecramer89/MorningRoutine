@@ -6,6 +6,8 @@ using System;
 
 public class Context : MonoBehaviour {
 	char[] storyLineDelimiterChar = { '%' };
+	char[] playerResponseDelimiterChar = { '-' };
+	char[] characterResponseDelimiterChar = { '|' };
 	char[] fieldDelimiterChar = {'<'};
 	public TextAsset createCharacters;
 	public TextAsset storyLines;
@@ -36,25 +38,22 @@ public class Context : MonoBehaviour {
 		string[] storyLineData = storyLines.text.Split(storyLineDelimiterChar, System.StringSplitOptions.None);
 		for (int i = 1; i<storyLineData.Length; i++) {
 			string[] fieldValues = storyLineData[i].Split (fieldDelimiterChar, System.StringSplitOptions.None);
-			if (fieldValues.Length >= 5) {//parsing multiple steps
+			if (fieldValues.Length < 4) throw new Exception($"Badly formatted storyline: {fieldValues.join()}. Check the input text file."); 
 				try{
-					int characterId = Int32.Parse(fieldValues[0]);
-					int storyLineId = Int32.Parse(fieldValues[1]);
+					string characterName = fieldValues[0];
+					int storyLineId = Guid.NewGuid();
 					string introductoryText = fieldValues[2].Trim();
-					string playerResponses = fieldValues[3].Trim();
-					string characterResponses = fieldValues[4].Trim();
-					string[] steps = new string[fieldValues.Length - 5];
-					for(int j=5;j<fieldValues.Length;j++){
-						steps[j-5]=fieldValues[j];
-					}
-					ActionCreator.Instance.AddStoryLine(characterId, storyLineId, introductoryText, playerResponses, characterResponses, steps);
+					string playerResponses = fieldValues[3].Trim().Split(playerResponseDelimiterChar, System.StringSplitOptions.None);
+					string characterResponses = fieldValues[4].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.None);
+	
+					ActionCreator.Instance.AddStoryLine(characterName, storyLineId, introductoryText, playerResponses, characterResponses);
 
 				}
 				catch(Exception e){
 					Debug.Log (e.Message);
 				}
 
-			}
+
 
 		}
 
