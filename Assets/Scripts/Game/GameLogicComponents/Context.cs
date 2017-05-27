@@ -1,14 +1,20 @@
 ﻿using System.Collections;
 using System.Text;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class Context : MonoBehaviour {
+	Regex eventNameRegex = new Regex(@"w\+");
+	Regex eventArgsRegex = new Regex(@"((w\,?)*)");
 	string[] newLineDelimiter = new string[]{ System.Environment.NewLine };
 	char[] storyLineDelimiterChar = { '%' };
 	char[] playerResponseDelimiterChar = { '-' };
 	char[] characterResponseDelimiterChar = { '|' };
+	char[] eventArgsDelimiter = { ','};
 	char[] fieldDelimiterChar = {'<'};
 	public TextAsset createCharacters;
 	public TextAsset storyLines;
@@ -42,12 +48,28 @@ public class Context : MonoBehaviour {
 					string introductoryText = fieldValues[1].Trim();
 					string[] playerResponses = fieldValues[2].Trim().Split(playerResponseDelimiterChar, System.StringSplitOptions.None);
 					string[] characterResponses = fieldValues[3].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.None);
-	                //get events and bound arguments.
-				    //convert event names into the constructor type using reflection
-				    //create delegates with bound arguments that will invoke the event constructor. one of the bound arguments needs to be a 
-				    //another delegate that will fetch the player id from the gloval context
-
-					ActionCreator.Instance.AddStoryLine(characterName, storyLineId, introductoryText, playerResponses, characterResponses);
+					Event[] eventsToPublishOnReaching = null;
+					if(fieldValues.Length >= 4){
+					string[] namesAndArgsOfEventsToPublishOnReaching = fieldValues[4].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.None);
+					eventsToPublishOnReaching = new Event[namesAndArgsOfEventsToPublishOnReaching.Length];
+					for(int j=0;j<namesAndArgsOfEventsToPublishOnReaching.Length;j++){
+						string nameAndArgs=namesAndArgsOfEventsToPublishOnReaching[j];
+						try{
+							string eventName = Regex.Match(nameAndArgs, @"\w*").ToString();
+							string allArgs=Regex.Match(nameAndArgs, @"\((\w*,?)*\)").ToString();
+							allArgs = allArgs.Substring(1, allArgs.Length-2);
+							string[] eventArgs = allArgs.Split(eventArgsDelimiter, StringSplitOptions.None);
+							Type eventType = Type.GetType(eventName);
+							//questions: how to specify if it has multilpe parameters? maybe we ca do a test.
+							ConstructorInfo constructor = eventType.GetConstructor(eventArgs.Select(eventArg => typeof(string)).ToArray());
+							eventsToPublishOnReaching[j]=(Event)constructor.Invoke(eventArgs);
+						}catch(Exception e){
+							Debug.Log($"Badly formatted event name and args: {nameAndArgs}");
+						}
+					}
+				}
+				    
+					ActionCreator.Instance.AddNodeToStory(characterName, storyLineId, introductoryText, playerResponses, characterResponses, eventsToPublishOnReaching);
 
 				}
 				catch(Exception e){

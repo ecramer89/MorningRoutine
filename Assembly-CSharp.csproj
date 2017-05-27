@@ -46,12 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Backend\Commands\AddStoryline.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\AdvanceDialogue.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\AddNodeToStory.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\AdvanceStory.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\BeginNewGame.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Backend\Commands\CreateCharacter.cs" />
-     <Compile Include="Assets\Scripts\Backend\Commands\InitiateDialogue.cs" />
+     <Compile Include="Assets\Scripts\Backend\Commands\InitiateStory.cs" />
      <Compile Include="Assets\Scripts\Backend\Controllers\CharacterController.cs" />
      <Compile Include="Assets\Scripts\Backend\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Backend\CustomAttributes.cs" />
@@ -61,13 +61,16 @@
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNode.cs" />
      <Compile Include="Assets\Scripts\Backend\Domain\Support\StoryNodeData.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\CharacterCreated.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\DialogueAdvanced.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\DialogueInitiated.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\Event.cs" />
      <Compile Include="Assets\Scripts\Backend\Events\NewGameBegun.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\StorylineAdded.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\StorylineCompleted.cs" />
-     <Compile Include="Assets\Scripts\Backend\Events\StorylinePrizeAwarded.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\NodeAddedToStory.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\PlayerLearnedAboutCharacter.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\PlayerMetCharacter.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\PlayerOffendedCharacter.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StoryAdvanced.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StoryCompleted.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StoryInitiated.cs" />
+     <Compile Include="Assets\Scripts\Backend\Events\StoryPrizeAwarded.cs" />
      <Compile Include="Assets\Scripts\Backend\Exceptions\ValidationException.cs" />
      <Compile Include="Assets\Scripts\Backend\Initialize.cs" />
      <Compile Include="Assets\Scripts\Backend\ReadModels\CharacterReadModel.cs" />
@@ -101,19 +104,19 @@
      <Compile Include="Assets\Scripts\GlobalGameConstants.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
-     <None Include="Assets\Contexts\Emily&apos;s Life\Characters\create_characters.txt" />
-     <None Include="Assets\Contexts\Emily&apos;s Life\Characters\create_storyline.txt" />
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+     <None Include="Assets\Contexts\Pip and Kaz\Characters\create_characters.txt" />
+     <None Include="Assets\Contexts\Pip and Kaz\Characters\create_storyline.txt" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <Reference Include="UnityEngine.PlaymodeTestsRunner">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>

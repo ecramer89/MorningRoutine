@@ -8,8 +8,8 @@ public class CharacterReducer : Reducer {
 			table.InsertModel (characterCreated.name, new CharacterReadModel(characterCreated.name, characterCreated.greeting));
 			return;
 		}
-		if (type == typeof(DialogueInitiated)) {
-			DialogueInitiated dialogueInitiated = (DialogueInitiated)evt;
+		if (type == typeof(StoryInitiated)) {
+			StoryInitiated dialogueInitiated = (StoryInitiated)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (dialogueInitiated.characterName);
 			character.currentText = dialogueInitiated.initialNode.text;
 			character.currentStorylineCompleted = false;
@@ -17,15 +17,15 @@ public class CharacterReducer : Reducer {
 			//but like to be explicit and will soon move to immutable structs for readmodels.
 			return;
 		}
-		if (type == typeof(DialogueAdvanced)) {
-			DialogueAdvanced dialogueAdvanced = (DialogueAdvanced)evt;
+		if (type == typeof(StoryAdvanced)) {
+			StoryAdvanced dialogueAdvanced = (StoryAdvanced)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (dialogueAdvanced.characterName);
 			character.currentText = dialogueAdvanced.newNode.text;
 			table.UpdateModel (dialogueAdvanced.characterName, character);
 			return;
 		}
-		if (type == typeof(StorylineCompleted)) {
-			StorylineCompleted storylineCompleted = (StorylineCompleted)evt;
+		if (type == typeof(StoryCompleted)) {
+			StoryCompleted storylineCompleted = (StoryCompleted)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (storylineCompleted.characterName);
 			character.currentText = character.goodbye;
 			character.currentStorylineCompleted = true;
