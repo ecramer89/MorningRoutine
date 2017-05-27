@@ -11,7 +11,7 @@ public class CharacterReducer : Reducer {
 		if (type == typeof(DialogueInitiated)) {
 			DialogueInitiated dialogueInitiated = (DialogueInitiated)evt;
 			CharacterReadModel character = (CharacterReadModel)table.GetModel (dialogueInitiated.characterName);
-			character.currentText = character.greeting;
+			character.currentText = dialogueInitiated.initialNode.text;
 			character.currentStorylineCompleted = false;
 			table.UpdateModel (dialogueInitiated.characterName, character); //not necessary, since we are mutating the reference,
 			//but like to be explicit and will soon move to immutable structs for readmodels.

@@ -1,7 +1,7 @@
 characterName<intro<playerResponse<characterResponses<events
 %kaz
 Who are you?
-{player{name}}
+emily|{player:name}
 Hmf. I suppose the girl let you in.
 PlayerMet(kaz)
 %kaz

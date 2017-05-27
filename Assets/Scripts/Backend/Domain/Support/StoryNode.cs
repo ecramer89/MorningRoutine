@@ -3,34 +3,30 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public class StoryNode  {
-	public string id;
 	public string text; //the text that is displayed for this story node.
 	public float requiredLevel; //the required degree of familiarity (floating point between 0 and 1) the player needs to have with this character to be ableto explore this story)
 	//(node, given player read moel adictionary of character id to degree of familiarity)
 	public string allowedPlayerResponse; //the input text that leads to this node from its parent
 	public Dictionary<string, List<StoryNode>> children; //the storynodes you can reach from this storynode.
 	public int prizeId;
+
 	 
-	public StoryNode(string id, string text, string allowedPlayerResponse=""){
-		this.id = id;
+	public StoryNode(string text){
 		this.text = text;
-		this.allowedPlayerResponse = allowedPlayerResponse;
 		this.children = new Dictionary<string, List<StoryNode>> ();
 	}
 
 	public void AddChild(string playerResponseLeadingToNode, StoryNode child){
-		string entryPattern = playerResponseLeadingToNode;
 		List<StoryNode> others;
-		if (children.TryGetValue (entryPattern, out others)) {
+		if (children.TryGetValue (playerResponseLeadingToNode, out others)) {
 			others.Add (child);
 		} else {
-			children.Add (entryPattern, new List<StoryNode>{child});
+			children.Add (playerResponseLeadingToNode, new List<StoryNode>{child});
 		}
-
 	}
 
-	//BFS; find the shallowest node whose text matches that of the specified parent text.
-	public StoryNode FindParent(string text){
+	//BFS; find the shallowest node whose text matches that of the specified text.
+	public StoryNode Find(string text){
 		if(Regex.Matches(this.text, text, RegexOptions.IgnoreCase).Count > 0) return this;
 		Queue<StoryNode> toVisit = new Queue<StoryNode> ();
 		foreach (StoryNode child in GetChildren()) {
@@ -60,7 +56,7 @@ public class StoryNode  {
 		return null;
 	}
 
-	public bool IsRoot(){
+	public bool IsLeaf(){
 		return children.Count == 0;
 	}
 
@@ -74,9 +70,7 @@ public class StoryNode  {
 		return result;
 	}
 		
-	public static StoryNode ToStoryNode(string id, string introductoryText, string allowedPlayerResponse){
-		return new StoryNode(id, introductoryText, allowedPlayerResponse);
-	}
+
 		
 
 

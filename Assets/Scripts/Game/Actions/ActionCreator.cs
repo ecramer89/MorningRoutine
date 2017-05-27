@@ -48,14 +48,15 @@ public class ActionCreator : MonoBehaviour  {
 		} else
 			Debug.Log ("Failed");
 	}
-
+	//TODO be explicit- dispatch actions like DIALOGUE_INITIATED, dialogue_advanced and have the gae reducer translate these into 
+	//more specific ui changes such as "message set" and "character se". gets confusing otherwsie.
 	public void InitiateDialogue(string characterName){
 		string playerId = GameState.Instance.PlayerState.id;
 		ServerResponse response = CharacterController.InitiateDialogue (characterName, playerId);
 		if (!response.error) {
 			Debug.Log ($"Success: Initiating dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateIdentifier);
-			GameReducer.Reduce (ActionTypes.MESSAGE_SET, character.greeting);
+			GameReducer.Reduce (ActionTypes.MESSAGE_SET, character.currentText);
 			GameReducer.Reduce (ActionTypes.CHARACTER_SET, character);
 		} else
 			Debug.Log ("Failed");

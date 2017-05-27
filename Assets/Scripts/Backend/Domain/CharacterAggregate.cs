@@ -4,7 +4,7 @@ using System.Linq;
 
 public class CharacterAggregate : Aggregate {
 
-	StoryNode dialogueTree; //the entire tree.
+	StoryNode rootNode; //root node of the current story tree (call it story tree instead of story line).
 	StoryNode currentNode; //a reference to the specific node in the dialogue tree that the player is currently on.
 	HashSet<string> completedStorylineIds;
 
@@ -55,7 +55,7 @@ public class CharacterAggregate : Aggregate {
 		};
 
 	}
-
+	//todo rename to add story node
 	private Event[] AddStoryLine(AddStoryline command){
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
@@ -66,7 +66,10 @@ public class CharacterAggregate : Aggregate {
 		if (command.introductoryText.Length == 0) {
 			throw new ValidationException ("introductoryText", "introductory text can't be empty.");
 		}
-
+		if (!ReferenceEquals (this.rootNode, null) && ReferenceEquals (rootNode.Find (command.introductoryText), null)) {
+			throw new ValidationException ("introductoryText", "introductory text is neither the root nor an existing line in this story.");
+		}
+	
 		for(int i=0;i<command.playerResponses.Length; i++){
 			string playerResponse = command.playerResponses [i];
 			string characterResponse = command.characterResponses [i];
@@ -91,7 +94,7 @@ public class CharacterAggregate : Aggregate {
 
 
 		return new Event[] {
-			new DialogueInitiated(command.characterName, command.playerId)
+			new DialogueInitiated(command.characterName, command.playerId, this.rootNode)
 		};
 
 	}
@@ -107,8 +110,9 @@ public class CharacterAggregate : Aggregate {
 		if (formattedInput.Length == 0) {
 			throw new ValidationException ("input", "Input can't be empty.");
 		}
-		if (this.currentNode.IsRoot ()) {
-			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterName, this.currentNode.id, command.playerId);
+		if (this.currentNode.IsLeaf ()) {
+			//todo it makes sense for storylines to have id, not sure about story nodes within stryline (unless each node has the id of the story) stories should be queued.
+			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterName, "TEMP-REPLACE WITH STORYLINE ID", command.playerId);
 			if (!this.completedStorylineIds.Contains (storylineCompleted.storylineId)) {
 				return new Event[]{
 					storylineCompleted,
@@ -138,37 +142,27 @@ public class CharacterAggregate : Aggregate {
 
 	private void OnCharacterCreated(CharacterCreated evt){
 		this.id = evt.name;
-		string greeting = evt.greeting;
-		this.dialogueTree = new StoryNode (GlobalGameConstants.NULL_ID, greeting);
 		this.currentNode = null;
 		this.completedStorylineIds = new HashSet<string> ();
 	}
 
-
+	//todo, change this to "story node added". storyline added would insert a new tree into a queue.
 	private void OnStoryLineAdded(AddStorylineAdded evt){
 		
 		StoryNode introductoryTextNode; 
-		if (evt.introductoryText == null || evt.introductoryText.Length == 0) {
-			introductoryTextNode = dialogueTree;
+		if (!ReferenceEquals (rootNode, null)) { 
+			introductoryTextNode = rootNode.Find (evt.introductoryText);
 		} else {
-			//search through dialogue tree until parent is found
-			//when we create 
-			introductoryTextNode = dialogueTree.FindParent(evt.introductoryText);
-		}
-
-		//parent not found in the dialogue tree. presume that parent is the root.
-		if (introductoryTextNode == null) {
-			introductoryTextNode = dialogueTree;
+			rootNode=new StoryNode(evt.introductoryText);
+			introductoryTextNode = rootNode;
 		}
 			
 		for (int i=0;i<evt.playerResponses.Length;i++) {
 			string allowedPlayerResponse = evt.playerResponses [i];
 			string characterResponse = evt.characterResponses [i];
-			//TODO shouldn't it check to see if there is already an existing node matching the given charcter response?
-			//instead of making a new one. because if there is, we should add it as a child of this node. (make a densely interconnected graph)
 
-			StoryNode node = dialogueTree.FindParent (characterResponse);
-			if(node == null) node = new StoryNode(evt.storylineId, characterResponse);
+			StoryNode node = rootNode.Find (characterResponse);
+			if(node == null) node = new StoryNode(characterResponse);
 			//add child should then accept the entry pattern as one argument and the node as the other.
 			introductoryTextNode.AddChild (allowedPlayerResponse,node);
 		}
@@ -179,7 +173,7 @@ public class CharacterAggregate : Aggregate {
 	}
 		
 	private void OnDialogueInitiated(DialogueInitiated evt){
-		this.currentNode = dialogueTree;
+		this.currentNode = rootNode;
 	}
 
 	private void OnDialogueAdvanced(DialogueAdvanced evt){
@@ -192,7 +186,7 @@ public class CharacterAggregate : Aggregate {
 		
 
 	private string[] ConvertPlayerResponsesToRegexes(string[] playerResponses){
-		return playerResponses.Select (response => @"\\w*" +$"{response}\\w*").ToArray();
+		return playerResponses.Select (response => @"\w*"+$"{response}"+@"\w*").ToArray();
 	}
 
 
