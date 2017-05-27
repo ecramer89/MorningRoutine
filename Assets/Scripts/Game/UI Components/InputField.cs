@@ -19,7 +19,7 @@ public class InputField : MonoBehaviour {
 
 	public void OnPressEnter(){
 		string userInput = text.text;
-		ActionCreator.Instance.AdvanceDialogue (userInput);
+		ActionCreator.Instance.AdvanceStory (userInput);
 		ClearInputField ();
 		inputField.ActivateInputField ();
 	}

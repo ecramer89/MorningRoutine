@@ -4,17 +4,23 @@ using System.Text.RegularExpressions;
 
 public class StoryNode  {
 	public string text; //the text that is displayed for this story node.
-	public float requiredLevel; //the required degree of familiarity (floating point between 0 and 1) the player needs to have with this character to be ableto explore this story)
-	//(node, given player read moel adictionary of character id to degree of familiarity)
-	public string allowedPlayerResponse; //the input text that leads to this node from its parent
 	public Dictionary<string, List<StoryNode>> children; //the storynodes you can reach from this storynode.
 	public int prizeId;
-
+	public Event[] eventsToPublishOnReaching;
+	public Event[] EventsToPublishOnReaching{
+		get {
+			return eventsToPublishOnReaching;
+		}
+		set {
+			eventsToPublishOnReaching = value;
+		}
+	}
 	 
 	public StoryNode(string text){
 		this.text = text;
 		this.children = new Dictionary<string, List<StoryNode>> ();
 	}
+
 
 	public void AddChild(string playerResponseLeadingToNode, StoryNode child){
 		List<StoryNode> others;

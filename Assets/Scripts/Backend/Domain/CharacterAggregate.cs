@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class CharacterAggregate : Aggregate {
-
 	StoryNode rootNode; //root node of the current story tree (call it story tree instead of story line).
 	StoryNode currentNode; //a reference to the specific node in the dialogue tree that the player is currently on.
-	HashSet<string> completedStorylineIds;
+	HashSet<string> completedStoryIds; //will probably just dequeue them.
 
 	public override Event[] execute(Command command){
 
 		if (command.GetType () == typeof(CreateCharacter)) {
 			return this.CreateCharacter ((CreateCharacter)command);
 		}
-		if (command.GetType () == typeof(AddStoryline)) {
-			return this.AddStoryLine ((AddStoryline)command);
+		if (command.GetType () == typeof(AddNodeToStory)) {
+			return this.AddNodeToStory ((AddNodeToStory)command);
 		}
-		if (command.GetType () == typeof(InitiateDialogue)) {
-			return this.InitiateDialogue ((InitiateDialogue)command);
+		if (command.GetType () == typeof(InitiateStory)) {
+			return this.InitiateStory ((InitiateStory)command);
 		}
-		if (command.GetType () == typeof(AdvanceDialogue)) {
-			return this.AdvanceDialogue ((AdvanceDialogue)command);
+		if (command.GetType () == typeof(AdvanceStory)) {
+			return this.AdvanceStory ((AdvanceStory)command);
 		}
 			
 		return new Event[]{};
@@ -30,17 +30,17 @@ public class CharacterAggregate : Aggregate {
 		if(evt.GetType() == typeof(CharacterCreated)){
 			this.OnCharacterCreated((CharacterCreated)evt);
 		}
-		if (evt.GetType () == typeof(AddStorylineAdded)) {
-			this.OnStoryLineAdded ((AddStorylineAdded)evt);
+		if (evt.GetType () == typeof(NodeAddedToStory)) {
+			this.OnNodeAddedToStory ((NodeAddedToStory)evt);
 		}
-		if (evt.GetType () == typeof(DialogueInitiated)) {
-			this.OnDialogueInitiated ((DialogueInitiated)evt);
+		if (evt.GetType () == typeof(StoryInitiated)) {
+			this.OnStoryInitiated ((StoryInitiated)evt);
 		}
-		if (evt.GetType () == typeof(DialogueAdvanced)) {
-			this.OnDialogueAdvanced ((DialogueAdvanced)evt);
+		if (evt.GetType () == typeof(StoryAdvanced)) {
+			this.OnStoryAdvanced ((StoryAdvanced)evt);
 		}
-		if (evt.GetType () == typeof(StorylineCompleted)) {
-			this.OnStorylineCompleted ((StorylineCompleted)evt);
+		if (evt.GetType () == typeof(StoryCompleted)) {
+			this.OnStoryCompleted ((StoryCompleted)evt);
 		}
 	}
 
@@ -56,7 +56,7 @@ public class CharacterAggregate : Aggregate {
 
 	}
 	//todo rename to add story node
-	private Event[] AddStoryLine(AddStoryline command){
+	private Event[] AddNodeToStory(AddNodeToStory command){
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
 		}
@@ -78,28 +78,29 @@ public class CharacterAggregate : Aggregate {
 			}
 		}
 
+	
 		string[] playerResponses = ConvertPlayerResponsesToRegexes (command.playerResponses);
 
 	
 		return new Event[] {
-			new AddStorylineAdded(command.characterName, command.storylineId, 
-				command.introductoryText,playerResponses, command.characterResponses)
+			new NodeAddedToStory(command.characterName, command.storylineId, 
+				command.introductoryText,playerResponses, command.characterResponses, command.eventsToPublishOnReaching)//stub for now
 		};
 	}
 
-	private Event[] InitiateDialogue(InitiateDialogue command){
+	private Event[] InitiateStory(InitiateStory command){
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
 		}
 
 
 		return new Event[] {
-			new DialogueInitiated(command.characterName, command.playerId, this.rootNode)
+			new StoryInitiated(command.characterName, command.playerId, this.rootNode)
 		};
 
 	}
 
-	private Event[] AdvanceDialogue(AdvanceDialogue command){
+	private Event[] AdvanceStory(AdvanceStory command){
 		if (this.id == Aggregate.NullId) {
 			throw new ValidationException ("id", "Character not found");
 		}
@@ -112,11 +113,11 @@ public class CharacterAggregate : Aggregate {
 		}
 		if (this.currentNode.IsLeaf ()) {
 			//todo it makes sense for storylines to have id, not sure about story nodes within stryline (unless each node has the id of the story) stories should be queued.
-			StorylineCompleted storylineCompleted = new StorylineCompleted (command.characterName, "TEMP-REPLACE WITH STORYLINE ID", command.playerId);
-			if (!this.completedStorylineIds.Contains (storylineCompleted.storylineId)) {
+			StoryCompleted storylineCompleted = new StoryCompleted (command.characterName, "TEMP-REPLACE WITH STORYLINE ID", command.playerId);
+			if (!this.completedStoryIds.Contains (storylineCompleted.storylineId)) {
 				return new Event[]{
 					storylineCompleted,
-					new StorylinePrizeAwarded(command.playerId, command.characterName,  currentNode.prizeId)
+					new StoryPrizeAwarded(command.playerId, command.characterName,  currentNode.prizeId)
 				};
 			}
 			return new Event[]{ 
@@ -130,24 +131,26 @@ public class CharacterAggregate : Aggregate {
 		int random = RandomNumberGenerator.Instance.Range(0, children.Count);
 		StoryNode newNode = children [random];
 
-		return new Event[]{
-			new DialogueAdvanced
-			(
-				command.characterName, command.playerId, 
-				command.input, newNode
-			)
-		};
+		Event[] result = new Event[1 + currentNode.eventsToPublishOnReaching.Length];
+		result [0] = new StoryAdvanced (
+			command.characterName, command.playerId, 
+			command.input, newNode
+		);
+		for (int i = 1; i < result.Length; i++) {
+			result [i] = currentNode.eventsToPublishOnReaching [i - 1];
+		}
+
+		return result;
 	}
 
 
 	private void OnCharacterCreated(CharacterCreated evt){
 		this.id = evt.name;
 		this.currentNode = null;
-		this.completedStorylineIds = new HashSet<string> ();
+		this.completedStoryIds = new HashSet<string> ();
 	}
-
-	//todo, change this to "story node added". storyline added would insert a new tree into a queue.
-	private void OnStoryLineAdded(AddStorylineAdded evt){
+		
+	private void OnNodeAddedToStory(NodeAddedToStory evt){
 		
 		StoryNode introductoryTextNode; 
 		if (!ReferenceEquals (rootNode, null)) { 
@@ -160,23 +163,29 @@ public class CharacterAggregate : Aggregate {
 		for (int i=0;i<evt.playerResponses.Length;i++) {
 			string allowedPlayerResponse = evt.playerResponses [i];
 			string characterResponse = evt.characterResponses [i];
-
+			string[] eventsToPublishOnReaching = null;
 			StoryNode node = rootNode.Find (characterResponse);
 			if(node == null) node = new StoryNode(characterResponse);
 			//add child should then accept the entry pattern as one argument and the node as the other.
 			introductoryTextNode.AddChild (allowedPlayerResponse,node);
 		}
+
+		//events are always in reference to the text for each node, not to the responses.
+		//(why there is only ever one of them)
+		//consequently, to set an event to be published in response to something a character says,
+		//need to specify it in the line of the story csv where that response is the introudctry text.
+		introductoryTextNode.eventsToPublishOnReaching = evt.eventsToPublishOnReaching;
 	}
 
-	private void OnStorylineCompleted(StorylineCompleted evt){
-		completedStorylineIds.Add (evt.storylineId);
+	private void OnStoryCompleted(StoryCompleted evt){
+		completedStoryIds.Add (evt.storylineId);
 	}
 		
-	private void OnDialogueInitiated(DialogueInitiated evt){
+	private void OnStoryInitiated(StoryInitiated evt){
 		this.currentNode = rootNode;
 	}
 
-	private void OnDialogueAdvanced(DialogueAdvanced evt){
+	private void OnStoryAdvanced(StoryAdvanced evt){
 		this.currentNode = evt.newNode;
 	}
 

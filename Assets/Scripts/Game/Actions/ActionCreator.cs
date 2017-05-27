@@ -41,8 +41,8 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ("Failed");
 	}
 
-	public void AddStoryLine(string characterName, string storyLineId, string introductoryText, string[] playerResponses, string[] characterResponses){
-		ServerResponse response = CharacterController.AddStoryLine (characterName, storyLineId, introductoryText, playerResponses,characterResponses);
+	public void AddNodeToStory(string characterName, string storyLineId, string introductoryText, string[] playerResponses, string[] characterResponses, Event[] eventsToPublishOnReaching = null){
+		ServerResponse response = CharacterController.AddNodeToStory (characterName, storyLineId, introductoryText, playerResponses,characterResponses, eventsToPublishOnReaching);
 		if (!response.error) {
 			Debug.Log ($"Success: New StoryLine");
 		} else
@@ -50,9 +50,9 @@ public class ActionCreator : MonoBehaviour  {
 	}
 	//TODO be explicit- dispatch actions like DIALOGUE_INITIATED, dialogue_advanced and have the gae reducer translate these into 
 	//more specific ui changes such as "message set" and "character se". gets confusing otherwsie.
-	public void InitiateDialogue(string characterName){
+	public void InitiateStory(string characterName){
 		string playerId = GameState.Instance.PlayerState.id;
-		ServerResponse response = CharacterController.InitiateDialogue (characterName, playerId);
+		ServerResponse response = CharacterController.InitiateStory (characterName, playerId);
 		if (!response.error) {
 			Debug.Log ($"Success: Initiating dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateIdentifier);
@@ -62,10 +62,10 @@ public class ActionCreator : MonoBehaviour  {
 			Debug.Log ("Failed");
 	}
 
-	public void AdvanceDialogue(string userInput){
+	public void AdvanceStory(string userInput){
 		string characterName = GameState.Instance.CharacterState.currentCharacterName;
 		string playerId = GameState.Instance.PlayerState.id;
-		ServerResponse response = CharacterController.AdvanceDialogue (characterName, playerId, userInput);
+		ServerResponse response = CharacterController.AdvanceStory (characterName, playerId, userInput);
 		if (!response.error) {
 			Debug.Log ($"Success: Advanced dialogue");
 			CharacterReadModel character = (CharacterReadModel)ModelRepository.Get (response.modelName,response.aggregateIdentifier);

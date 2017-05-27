@@ -21,6 +21,6 @@ public class StartDemoButton : MonoBehaviour {
 	}
 
 	void StartDemo(){
-		ActionCreator.Instance.InitiateDialogue (GlobalGameConstants.DEMO_CHARACTER_NAME);
+		ActionCreator.Instance.InitiateStory (GlobalGameConstants.DEMO_CHARACTER_NAME);
 	}
 }

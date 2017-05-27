@@ -3,12 +3,12 @@ characterName<intro<playerResponse<characterResponses<events
 Who are you?
 emily|{player:name}
 Hmf. I suppose the girl let you in.
-PlayerMetKaz
+PlayerMetCharacter(kaz)
 %kaz
 Hmf. I suppose the girl let you in.
 girl|who
 Tall girl, shaggy brown hair. She has a sadistic streak so count yourself lucky if you avoided interacting with her.
-PlayerLearnedAboutGirl
+PlayerLearnedAboutCharacter(girl)
 %kaz
 Tall girl, shaggy brown hair. She has a sadistic streak so count yourself lucky if you avoided interacting with her.
 sadistic|(what do you mean)|how|why
@@ -21,7 +21,7 @@ His name is Pip. He's just a kitten.|Just the garden. Sometimes I and my friend 
 His name is Pip. He's just a kitten.
 trouble|bother|mischief-love|like-uncle|relation|family
 Pip's very curious. He takes after his mother that way. He's not at all like me.|Pip's family, so there isn't much choice, is there?|Pip's my sister's kitten.
-PlayerLearnedAboutPip
+PlayerLearnedAboutCharacter(pip)
 %kaz
 Just the garden. Sometimes I and my friend would make our way to a park a little ways away though.
 friend-see|do-bird|rat|mouse
@@ -30,11 +30,12 @@ My friend Riddle, whom I've known for some time. He's a large tuxedo cat.|I most
 That's none of your business.
 sorry
 Whatever
-<PlayerOffendedKaz
+PlayerOffendedCharacter(kaz,age)
 %kaz
 My friend Riddle, whom I've known for some time. He's a large tuxedo cat.
 *
 NOT WRITTEN YET
+PlayerLearnedAboutCharacter(riddle)
 %kaz
 I mostly slept. Riddle-my friend- like to hunt.
 *

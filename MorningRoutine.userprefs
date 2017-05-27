@@ -1,19 +1,39 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Backend/Services/CommandHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Test.cs">
     <Files>
-      <File FileName="Assets/Scripts/Game/Actions/ActionCreator.cs" Line="9" Column="3" />
-      <File FileName="Assets/Scripts/Game/GameLogicComponents/Timed.cs" Line="1" Column="1" />
+      <File FileName="Assets/Contexts/Emily's Life/Characters/create_storyline.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Services/CommandHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/Actions/ActionCreator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/UI Components/StartDemoButton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GlobalGameConstants.cs" Line="1" Column="1" />
+      <File FileName="Assets/Contexts/Emily's Life/Characters/create_characters.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Domain/CharacterAggregate.cs" Line="79" Column="4" />
+      <File FileName="Assets/Scripts/Backend/Domain/Support/StoryNode.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Reducers/CharacterReducer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Events/StoryInitiated.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scripts/Game/GameLogicComponents/Context.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/Reducers/GameReducer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Game/GameState/GameState.cs" Line="41" Column="4" />
       <File FileName="Assets/Scripts/Game/UI Components/ImagePane.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game/UI Components/InputField.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game/UI Components/Message.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game/GameLogicComponents/Context.cs" Line="23" Column="34" />
-      <File FileName="Assets/Contexts/Emily's Life/Characters/create_characters.txt" Line="2" Column="9" />
-      <File FileName="Assets/Scripts/Backend/Services/CommandHandler.cs" Line="19" Column="2" />
+      <File FileName="Assets/Scripts/Backend/Commands/AddNodeToStory.cs" Line="8" Column="11" />
+      <File FileName="Assets/Scripts/Backend/Events/NodeAddedToStory.cs" Line="19" Column="2" />
+      <File FileName="Assets/Scripts/Backend/Events/StoryAdvanced.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Events/Event.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Commands/AdvanceStory.cs" Line="8" Column="27" />
+      <File FileName="Assets/Scripts/Backend/Commands/InitiateStory.cs" Line="6" Column="2" />
+      <File FileName="Assets/Scripts/Backend/Commands/BeginNewGame.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Commands/Command.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Events/StoryCompleted.cs" Line="14" Column="1" />
+      <File FileName="Assets/Scripts/Backend/Events/StoryPrizeAwarded.cs" Line="14" Column="2" />
+      <File FileName="Assets/Scripts/Backend/Commands/CreateCharacter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Test.cs" Line="27" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/emilycramer/MorningRoutine/Assets/Scripts/Backend/Domain/Support/StoryNode.cs" line="52" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
