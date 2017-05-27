@@ -30,7 +30,7 @@ My friend Riddle, whom I've known for some time. He's a large tuxedo cat.|I most
 That's none of your business.
 sorry
 Whatever
-PlayerOffendedCharacter(kaz)
+PlayerOffendedCharacter(kaz,age)
 %kaz
 My friend Riddle, whom I've known for some time. He's a large tuxedo cat.
 *

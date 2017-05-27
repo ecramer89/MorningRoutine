@@ -1,7 +1,9 @@
 ﻿
 public class PlayerOffendedCharacter : Event {
-	string characterName;
-	public PlayerOffendedCharacter(string characterName){
+	public string characterName;
+	public string reason;
+	public PlayerOffendedCharacter(string characterName,string reason=""){
 		this.characterName = characterName;
+		this.reason = reason;
 	}
 }

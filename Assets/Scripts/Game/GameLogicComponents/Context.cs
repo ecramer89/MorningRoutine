@@ -46,11 +46,11 @@ public class Context : MonoBehaviour {
 					string characterName = fieldValues[0];
 					string storyLineId = Guid.NewGuid().ToString();
 					string introductoryText = fieldValues[1].Trim();
-					string[] playerResponses = fieldValues[2].Trim().Split(playerResponseDelimiterChar, System.StringSplitOptions.None);
-					string[] characterResponses = fieldValues[3].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.None);
+					string[] playerResponses = fieldValues[2].Trim().Split(playerResponseDelimiterChar, System.StringSplitOptions.RemoveEmptyEntries);
+					string[] characterResponses = fieldValues[3].Trim().Split(characterResponseDelimiterChar,System.StringSplitOptions.RemoveEmptyEntries);
 					Event[] eventsToPublishOnReaching = null;
 					if(fieldValues.Length >= 4){
-					string[] namesAndArgsOfEventsToPublishOnReaching = fieldValues[4].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.None);
+					string[] namesAndArgsOfEventsToPublishOnReaching = fieldValues[4].Trim().Split(characterResponseDelimiterChar, System.StringSplitOptions.RemoveEmptyEntries);
 					eventsToPublishOnReaching = new Event[namesAndArgsOfEventsToPublishOnReaching.Length];
 					for(int j=0;j<namesAndArgsOfEventsToPublishOnReaching.Length;j++){
 						string nameAndArgs=namesAndArgsOfEventsToPublishOnReaching[j];

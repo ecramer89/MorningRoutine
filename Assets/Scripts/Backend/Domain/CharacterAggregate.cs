@@ -131,13 +131,13 @@ public class CharacterAggregate : Aggregate {
 		int random = RandomNumberGenerator.Instance.Range(0, children.Count);
 		StoryNode newNode = children [random];
 
-		Event[] result = new Event[1 + newNode.eventsToPublishOnReaching.Length];
+		Event[] result = new Event[1 + currentNode.eventsToPublishOnReaching.Length];
 		result [0] = new StoryAdvanced (
 			command.characterName, command.playerId, 
 			command.input, newNode
 		);
 		for (int i = 1; i < result.Length; i++) {
-			result [i] = newNode.eventsToPublishOnReaching [i - 1];
+			result [i] = currentNode.eventsToPublishOnReaching [i - 1];
 		}
 
 		return result;
