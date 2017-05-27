@@ -79,7 +79,6 @@
      <Compile Include="Assets\Scripts\Backend\ServerResponses.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\AggregateRepository.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\CommandHandler.cs" />
-     <Compile Include="Assets\Scripts\Backend\Services\Constants.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\EventStore.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\GetModelName.cs" />
      <Compile Include="Assets\Scripts\Backend\Services\IntegerGUIDCreator.cs" />
@@ -99,6 +98,7 @@
      <Compile Include="Assets\Scripts\Game\UI Components\Message.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartDemoButton.cs" />
      <Compile Include="Assets\Scripts\Game\UI Components\StartGameButton.cs" />
+     <Compile Include="Assets\Scripts\GlobalGameConstants.cs" />
      <Compile Include="Assets\Scripts\Production.cs" />
      <Compile Include="Assets\Scripts\Test.cs" />
      <None Include="Assets\Contexts\Emily&apos;s Life\Characters\create_characters.txt" />

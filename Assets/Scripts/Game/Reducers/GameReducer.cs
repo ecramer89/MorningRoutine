@@ -38,7 +38,7 @@ public class GameReducer  {
 			break;
 
 		case ActionTypes.CURRENT_STORYLINE_COMPLETED:
-			state.SetCharacter (Constants.NULL_ID);
+			state.SetCharacter (GlobalGameConstants.NULL_ID);
 			break;
 
 		}

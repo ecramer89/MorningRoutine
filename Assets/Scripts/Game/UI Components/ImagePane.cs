@@ -16,7 +16,7 @@ public class ImagePane : MonoBehaviour {
 		imageDelayBeforeDisappear = gameObject.GetComponent<Timed> ();
 		//register delegate to fetch the image data of character when the new character is set
 		GameState.Instance.characterSet += (id) => {
-			if(id == Constants.NULL_ID){ 
+			if(id == GlobalGameConstants.NULL_ID){ 
 				imageDelayBeforeDisappear.Set(2);
 				imageDelayBeforeDisappear.Done+=() => {
 					gameObject.SetActive(false);

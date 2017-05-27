@@ -22,7 +22,7 @@ public class Message : MonoBehaviour {
 		text = gameObject.GetComponent<Text> ();
 		messageDelayBeforeDisappear = gameObject.GetComponent<Timed> ();
 		GameState.Instance.characterSet += (id) => {
-			if (id == Constants.NULL_ID) { 
+			if (id == GlobalGameConstants.NULL_ID) { 
 				messageDelayBeforeDisappear.Set (2);
 				messageDelayBeforeDisappear.Done += () => {
 					gameObject.SetActive (false);

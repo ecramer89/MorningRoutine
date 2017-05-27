@@ -24,7 +24,7 @@ public class Context : MonoBehaviour {
 		string[] characterData = createCharacters.text.Split (newLineDelimiter, System.StringSplitOptions.None);
 		for (int i = 1; i < characterData.Length; i++) {
 			string[] fieldValues = characterData [i].Split (fieldDelimiterChar, System.StringSplitOptions.None);
-			if (fieldValues.Length == 2) {
+			if (fieldValues.Length >= 2) {
 				ActionCreator.Instance.CreateCharacter (fieldValues [0], fieldValues [1]);
 			}
 		}
@@ -45,7 +45,7 @@ public class Context : MonoBehaviour {
 	                //get events and bound arguments.
 				    //convert event names into the constructor type using reflection
 				    //create delegates with bound arguments that will invoke the event constructor. one of the bound arguments needs to be a 
-				//another delegate that will fetch the player id from the gloval context
+				    //another delegate that will fetch the player id from the gloval context
 
 					ActionCreator.Instance.AddStoryLine(characterName, storyLineId, introductoryText, playerResponses, characterResponses);
 

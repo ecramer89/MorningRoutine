@@ -28,7 +28,9 @@ public class CommandHandler : Service {
 			foreach (Event evt in results) {
 				aggregate.hydrate (evt);
 			}
-
+			//TODO okay, good. so it looks as though each read model does indeed respond to each event.
+			//you can make a special read model for each character and have that in addition to the read models for each character, 
+			//it doesn't really matter.
 			foreach (Reducer reducer in reducers) {
 				foreach (Event evt in results) {
 					reducer.Reduce (evt, ModelRepository.GetTable (reducer.ModelName));

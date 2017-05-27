@@ -28,6 +28,8 @@ friend-see|do-bird|rat|mouse
 My friend Riddle, whom I've known for some time. He's a large tuxedo cat.|I mostly slept. Riddle-my friend- like to hunt.|Riddle liked hunting. I joined occasionally but I was never very good.
 %kaz
 That's none of your business.
+sorry
+Whatever
 <PlayerOffended(kaz)
 %kaz
 My friend Riddle, whom I've known for some time. He's a large tuxedo cat.

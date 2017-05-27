@@ -71,7 +71,7 @@ public class CharacterAggregate : Aggregate {
 			string playerResponse = command.playerResponses [i];
 			string characterResponse = command.characterResponses [i];
 			if (playerResponse.Length == 0 || characterResponse.Length == 0) {
-				throw new ValidationException ("response", $"Response can't be empty; check the values for response {i+1}");
+				throw new ValidationException ("response", $"Response can't be empty; check the values for response {i+1}; introductory text '{command.introductoryText}'");
 			}
 		}
 
@@ -139,7 +139,7 @@ public class CharacterAggregate : Aggregate {
 	private void OnCharacterCreated(CharacterCreated evt){
 		this.id = evt.name;
 		string greeting = evt.greeting;
-		this.dialogueTree = new StoryNode (Constants.NULL_ID, greeting);
+		this.dialogueTree = new StoryNode (GlobalGameConstants.NULL_ID, greeting);
 		this.currentNode = null;
 		this.completedStorylineIds = new HashSet<string> ();
 	}

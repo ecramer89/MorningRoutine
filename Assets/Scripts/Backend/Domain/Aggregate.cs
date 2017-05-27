@@ -1,6 +1,6 @@
 ﻿public abstract class Aggregate  {
 
-	static string nullId = Constants.NULL_ID;
+	static string nullId = GlobalGameConstants.NULL_ID;
 	public static string NullId{
 		get { 
 			return nullId;
